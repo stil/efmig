@@ -1,0 +1,91 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Efmig.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="720" d:DesignHeight="700"
+        x:Class="Efmig.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Width="720"
+        SizeToContent="Height"
+        Title="efmig">
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
+
+    <StackPanel Margin="20">
+        <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*">
+            <TextBlock VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Margin="0 0 12 0">Configuration profile</TextBlock>
+
+            <Grid Grid.Row="0" Grid.Column="1" ColumnDefinitions="*,Auto,Auto">
+                <ComboBox Grid.Row="0" Grid.Column="0" SelectedItem="{Binding SelectedConfigurationProfile}"
+                          Margin="0 4" HorizontalAlignment="Stretch"
+                          Items="{Binding ConfigurationProfileIds}"
+                          IsEnabled="{Binding ConfigurationProfileIds.Count}"
+                          x:Name="OptionDotnetEfVersion">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding }" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+                <Button Grid.Column="1" VerticalContentAlignment="Center" Margin="8,0,8,0"
+                        Command="{Binding EditProfile}">
+                    Edit
+                </Button>
+                <Button Grid.Column="2" VerticalContentAlignment="Center" Command="{Binding AddProfile}">Add</Button>
+            </Grid>
+
+            <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="0 0 12 0">Verbose logging</TextBlock>
+
+            <CheckBox Grid.Row="1" Grid.Column="1" Margin="0 4" HorizontalAlignment="Stretch"
+                      IsChecked="{Binding VerboseLogging}" />
+
+            <Grid Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0" RowDefinitions="*" ColumnDefinitions="*,8,*,8,*"
+                  Margin="0 12 0 0">
+
+                <Button Grid.Column="0" Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center" Command="{Binding ListMigrations}">
+                    List migrations
+                </Button>
+
+                <Button Grid.Column="2" Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center" Command="{Binding RemoveLastMigration}">
+                    Remove most recent migration
+                </Button>
+
+                <Button Grid.Column="4" Grid.Row="0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                        Command="{Binding RemoveLastMigration}">
+                    Generate migration script
+                </Button>
+
+            </Grid>
+
+        </Grid>
+
+
+        <Grid RowDefinitions="Auto" ColumnDefinitions="*,8,*" Margin="0 20 0 0">
+            <TextBox Watermark="New migration name" Grid.Column="0" HorizontalAlignment="Stretch"
+                     Text="{Binding NewMigrationName}">
+            </TextBox>
+
+            <Button Grid.Row="0" Grid.Column="2" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
+                    Command="{Binding CreateMigration}">
+                Create migration
+            </Button>
+        </Grid>
+
+        <TextBlock Margin="0 20 0 0" FontSize="12">Output Window</TextBlock>
+        <Border Background="#012456" CornerRadius="4" Padding="12 8">
+            <ScrollViewer VerticalAlignment="Stretch" Height="400" x:Name="LogScrollViewer">
+                <TextBlock x:Name="LogViewer" Margin="0 4 0 0" Foreground="White" />
+            </ScrollViewer>
+        </Border>
+    </StackPanel>
+
+</Window>
