@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using CliWrap;
+﻿using System.Threading.Tasks;
 
 namespace Efmig.Migrations.Actions;
 
@@ -8,10 +6,14 @@ public class ListMigrationsAction : IAction
 {
     public async Task ExecuteAsync(ActionContext ctx)
     {
-        await CommonActionHelper.RunDotnetEfTool(ctx, new []
+        await CommonActionHelper.RunDotnetEfTool(ctx, new CommonActionOptions
         {
-            "migrations",
-            "list"
+            ActionName = "listing migrations",
+            DotnetEfArgs = new[]
+            {
+                "migrations",
+                "list"
+            }
         });
     }
 }

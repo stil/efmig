@@ -41,10 +41,10 @@
                 <Button Grid.Column="2" VerticalContentAlignment="Center" Command="{Binding AddProfile}">Add</Button>
             </Grid>
 
-            <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="0 0 12 0">Verbose logging</TextBlock>
-
-            <CheckBox Grid.Row="1" Grid.Column="1" Margin="0 4" HorizontalAlignment="Stretch"
-                      IsChecked="{Binding VerboseLogging}" />
+            <!-- <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="0 0 12 0">Verbose logging</TextBlock> -->
+            <!-- -->
+            <!-- <CheckBox Grid.Row="1" Grid.Column="1" Margin="0 4" HorizontalAlignment="Stretch" -->
+            <!--           IsChecked="{Binding VerboseLogging}" /> -->
 
             <Grid Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0" RowDefinitions="*" ColumnDefinitions="*,8,*,8,*"
                   Margin="0 12 0 0">
@@ -60,7 +60,7 @@
                 </Button>
 
                 <Button Grid.Column="4" Grid.Row="0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
-                        Command="{Binding RemoveLastMigration}">
+                        Command="{Binding GenerateMigrationScript}">
                     Generate migration script
                 </Button>
 
@@ -81,9 +81,9 @@
         </Grid>
 
         <TextBlock Margin="0 20 0 0" FontSize="12">Output Window</TextBlock>
-        <Border Background="#012456" CornerRadius="4" Padding="12 8">
-            <ScrollViewer VerticalAlignment="Stretch" Height="400" x:Name="LogScrollViewer">
-                <TextBlock x:Name="LogViewer" Margin="0 4 0 0" Foreground="White" />
+        <Border Background="#012456" CornerRadius="4">
+            <ScrollViewer VerticalAlignment="Stretch" Height="400" x:Name="LogScrollViewer" HorizontalScrollBarVisibility="Auto">
+                <SelectableTextBlock x:Name="LogViewer" Margin="0 4 0 0" Foreground="White" Padding="12 8" />
             </ScrollViewer>
         </Border>
     </StackPanel>

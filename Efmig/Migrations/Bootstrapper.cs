@@ -174,7 +174,7 @@ public class Bootstrapper
                 p.Name == mainWindowViewModel.SelectedConfigurationProfile);
 
             var context = new ActionContext(mainWindow.LogViewer, mainWindow.LogScrollViewer, selectedProfile);
-            var action = new ListMigrationsAction();
+            var action = new RemoveLastMigrationAction();
             await action.ExecuteAsync(context);
         }, profileSelected);
 
@@ -199,7 +199,7 @@ public class Bootstrapper
 
             var context = new ActionContext(mainWindow.LogViewer, mainWindow.LogScrollViewer, selectedProfile);
             context.Data = mainWindowViewModel.NewMigrationName;
-            var action = new GenerateMigrationScriptAction();
+            var action = new CreateMigrationAction();
             await action.ExecuteAsync(context);
         }, profileSelectedAndEnteredMigrationName);
 

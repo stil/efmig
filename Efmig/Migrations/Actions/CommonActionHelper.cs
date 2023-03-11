@@ -4,12 +4,19 @@ using CliWrap;
 
 namespace Efmig.Migrations.Actions;
 
+public class CommonActionOptions
+{
+    public string ActionName { get; set; }
+    public string[] DotnetEfArgs { get; set; }
+    public Action<string> DataCallback { get; set; }
+}
+
 public static class CommonActionHelper
 {
-    public static async Task RunDotnetEfTool(ActionContext ctx, string[] dotnetEfArgs)
+    public static async Task RunDotnetEfTool(ActionContext ctx, CommonActionOptions options)
     {
         ctx.ClearLog();
-        ctx.LogInfo("Started operation: listing migrations.\r\n");
+        ctx.LogInfo($"Started operation: {options.ActionName}.\r\n");
 
         var targetDir = await HelperProjectInitializer.CreateHelperProject(ctx.ConfigurationProfile);
 
@@ -50,7 +57,7 @@ public static class CommonActionHelper
                     args.Add("run");
                     args.Add("dotnet-ef");
 
-                    args.Add(dotnetEfArgs);
+                    args.Add(options.DotnetEfArgs);
 
                     args.Add("-v");
                     args.Add(new[] { "--context", ctx.ConfigurationProfile.DbContextFullName });
@@ -65,10 +72,22 @@ public static class CommonActionHelper
                     var errorMarker = "error:".PadRight(markerLength, ' ');
                     var verboseMarker = "verbose:".PadRight(markerLength, ' ');
                     var infoMarker = "info:".PadRight(markerLength, ' ');
+                    var dataMarker = "data:".PadRight(markerLength, ' ');
 
                     if (line.StartsWith(errorMarker))
                     {
                         ctx.LogError(line[markerLength..]);
+                    }
+                    else if (line.StartsWith(dataMarker))
+                    {
+                        if (options.DataCallback != null)
+                        {
+                            options.DataCallback(line[markerLength..]);
+                        }
+                        else
+                        {
+                            ctx.LogData(line[markerLength..]);
+                        }
                     }
                     else if (line.StartsWith(verboseMarker))
                     {
@@ -93,6 +112,7 @@ public static class CommonActionHelper
             ctx.LogError(e.ToString());
         }
 
-        ctx.LogInfo("Finished operation.");
+        ctx.LogInfo("\r\nFinished operation.");
+        ctx.ScrollToEnd();
     }
 }

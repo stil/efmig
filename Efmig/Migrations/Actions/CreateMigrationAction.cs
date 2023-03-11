@@ -6,16 +6,18 @@ public class CreateMigrationAction : IAction
 {
     public async Task ExecuteAsync(ActionContext ctx)
     {
-        ctx.LogInfo("Started operation: create migration.\r\n");
-        
-        var targetDir = await HelperProjectInitializer.CreateHelperProject(ctx.ConfigurationProfile);
+        var migrationName = (string)ctx.Data;
 
-
-
-        ;
-
-        targetDir.Delete(true);
-
-        ctx.LogInfo("Finished operation.");
+        await CommonActionHelper.RunDotnetEfTool(ctx, new CommonActionOptions
+        {
+            ActionName = $"creating migration '{migrationName}'",
+            DotnetEfArgs = new[]
+            {
+                "migrations",
+                "add",
+                migrationName,
+                "--json"
+            }
+        });
     }
 }

@@ -6,16 +6,15 @@ public class RemoveLastMigrationAction : IAction
 {
     public async Task ExecuteAsync(ActionContext ctx)
     {
-        ctx.LogInfo("Started operation: remove last migration.\r\n");
-        
-        var targetDir = await HelperProjectInitializer.CreateHelperProject(ctx.ConfigurationProfile);
-
-
-
-        ;
-
-        targetDir.Delete(true);
-
-        ctx.LogInfo("Finished operation.");
+        await CommonActionHelper.RunDotnetEfTool(ctx, new CommonActionOptions
+        {
+            ActionName = "remove last migration",
+            DotnetEfArgs = new[]
+            {
+                "migrations",
+                "remove",
+                "--json"
+            }
+        });
     }
 }

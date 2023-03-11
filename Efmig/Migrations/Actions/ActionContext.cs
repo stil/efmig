@@ -25,7 +25,12 @@ public class ActionContext
         Dispatcher.UIThread.InvokeAsync(() => { _logElement.Inlines!.Clear(); });
     }
 
-    private void AddLogMessage(string message, string foreground = null)
+    public void ScrollToEnd()
+    {
+        Dispatcher.UIThread.InvokeAsync(() => { _scrollViewer.ScrollToEnd(); });
+    }
+
+    private void AddLogMessage(string message, string foreground = null, string background = null)
     {
         Dispatcher.UIThread.InvokeAsync(() =>
         {
@@ -33,6 +38,11 @@ public class ActionContext
             if (foreground != null)
             {
                 run.Foreground = SolidColorBrush.Parse(foreground);
+            }
+
+            if (background != null)
+            {
+                run.Background = SolidColorBrush.Parse(background);
             }
 
             _logElement.Inlines!.Add(run);
@@ -44,4 +54,5 @@ public class ActionContext
     public void LogError(string message) => AddLogMessage(message, "#FF0000");
     public void LogVerbose(string message) => AddLogMessage(message, "#808080");
     public void LogImportant(string message) => AddLogMessage(message, "#FFFF00");
+    public void LogData(string message) => AddLogMessage(message, "#000000", "#CCCCCC");
 }
