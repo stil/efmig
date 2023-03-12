@@ -7,12 +7,13 @@
         x:Class="Efmig.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Width="720"
+        Width="1024"
+        MinHeight="600"
         SizeToContent="Height"
         Title="efmig"
         TransparencyLevelHint="AcrylicBlur"
         Background="Transparent"
-        >
+        ExtendClientAreaToDecorationsHint="True">
 
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
@@ -20,96 +21,125 @@
         <vm:MainWindowViewModel />
     </Design.DataContext>
 
+    <Window.Resources>
+
+    </Window.Resources>
     <Panel>
+
         <ExperimentalAcrylicBorder IsHitTestVisible="False">
             <ExperimentalAcrylicBorder.Material>
                 <ExperimentalAcrylicMaterial
                     BackgroundSource="Digger"
-                    TintColor="Black"
                     TintOpacity="1"
+                    TintColor="{DynamicResource BgColor}"
                     MaterialOpacity="0.65" />
             </ExperimentalAcrylicBorder.Material>
         </ExperimentalAcrylicBorder>
-        
-    <Grid Margin="20">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-        </Grid.RowDefinitions>
-        <StackPanel Orientation="Vertical" Grid.Row="0">
-            <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*">
-            <TextBlock VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Margin="0 0 12 0">Configuration profile</TextBlock>
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
 
-            <Grid Grid.Row="0" Grid.Column="1" ColumnDefinitions="*,Auto,Auto">
-                <ComboBox Grid.Row="0" Grid.Column="0" SelectedItem="{Binding SelectedConfigurationProfile}"
-                          Margin="0 4" HorizontalAlignment="Stretch"
-                          Items="{Binding ConfigurationProfileIds}"
-                          IsEnabled="{Binding ConfigurationProfileIds.Count}"
-                          x:Name="OptionDotnetEfVersion">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding }" />
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="1" Margin="12 0 12 12" HorizontalAlignment="Stretch">
+                    
 
-                <Button Grid.Column="1" VerticalContentAlignment="Center" Margin="8,0,8,0"
-                        Command="{Binding EditProfile}">
-                    Edit
-                </Button>
-                <Button Grid.Column="2" VerticalContentAlignment="Center" Command="{Binding AddProfile}">Add</Button>
+
+                    <TextBlock VerticalAlignment="Center" Margin="0 0 12 0">Create migration</TextBlock>
+
+                    <DockPanel HorizontalAlignment="Stretch">
+                        <Button
+                            DockPanel.Dock="Right"
+                            Margin="4" HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Center"
+                                Command="{Binding CreateMigration}">
+                            <PathIcon Data="{StaticResource AddSquareRegular}"></PathIcon>
+                        </Button>
+                        <TextBox DockPanel.Dock="Left" Margin="4" Watermark="New migration name" HorizontalAlignment="Stretch"
+                                 Text="{Binding NewMigrationName}" />
+
+                        
+                    </DockPanel>
+
+                    <TextBlock VerticalAlignment="Center" Margin="0 16 12 0">Actions</TextBlock>
+
+                    <Button Margin="4" VerticalAlignment="Top" HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Center" Command="{Binding ListMigrations}">
+                        List migrations
+                    </Button>
+
+                    <Button Margin="4" VerticalAlignment="Top" HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Center" Command="{Binding RemoveLastMigration}">
+                        Remove most recent migration
+                    </Button>
+
+                    <Button Margin="4" HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Center"
+                            Command="{Binding GenerateMigrationScript}">
+                        Generate migration script
+                    </Button>
+
+                    
+                  
+
+                </StackPanel>
+
+                <StackPanel Grid.Column="0" Grid.Row="2" VerticalAlignment="Bottom">
+                    <Button x:Name="ProjectUrl" Background="Transparent" Click="ProjectUrl_OnClick">
+                        <PathIcon Data="{StaticResource Github}"></PathIcon>
+                    </Button>
+                </StackPanel>
+                
+             
+                <DockPanel Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" >
+                       
+                    <Label DockPanel.Dock="Left" VerticalAlignment="Center">Profile:</Label>
+
+                    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                        <Button Margin="4" Command="{Binding EditProfile}">
+                            <PathIcon Data="{StaticResource EditSettingsRegular}" />
+                        </Button>
+                        <Button Margin="4"  VerticalContentAlignment="Center"
+                                Command="{Binding AddProfile}">
+                            <PathIcon Data="{StaticResource AddSquareRegular}"></PathIcon>
+                        </Button>
+                    </StackPanel>
+                    <ComboBox
+                        DockPanel.Dock="Left"
+                        
+                        Margin="8"
+                        Width="460"
+                        SelectedItem="{Binding SelectedConfigurationProfile}"
+                        HorizontalAlignment="Stretch"
+                        Items="{Binding ConfigurationProfileIds}"
+                        IsEnabled="{Binding ConfigurationProfileIds.Count}"
+                        x:Name="OptionDotnetEfVersion">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding }" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                      
+                </DockPanel>
+                    
+                    <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" DockPanel.Dock="Bottom" Background="#012456" CornerRadius="4 0 0 0" VerticalAlignment="Stretch" SizeChanged="Control_OnSizeChanged">
+                        
+                            
+                        <ScrollViewer Name="ScrollOutputViewer" VerticalAlignment="Stretch" Height="400"
+                                      x:Name="LogScrollViewer" HorizontalScrollBarVisibility="Auto">
+                            <SelectableTextBlock x:Name="LogViewer" Foreground="White" Padding="12" />
+                        </ScrollViewer>
+                            
+                       
+                    </Border>
+                
             </Grid>
-
-            <!-- <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="0 0 12 0">Verbose logging</TextBlock> -->
-            <!-- -->
-            <!-- <CheckBox Grid.Row="1" Grid.Column="1" Margin="0 4" HorizontalAlignment="Stretch" -->
-            <!--           IsChecked="{Binding VerboseLogging}" /> -->
-
-            <Grid Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0" RowDefinitions="*" ColumnDefinitions="*,8,*,8,*"
-                  Margin="0 12 0 0">
-
-                <Button Grid.Column="0" Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Stretch"
-                        HorizontalContentAlignment="Center" Command="{Binding ListMigrations}">
-                    List migrations
-                </Button>
-
-                <Button Grid.Column="2" Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Stretch"
-                        HorizontalContentAlignment="Center" Command="{Binding RemoveLastMigration}">
-                    Remove most recent migration
-                </Button>
-
-                <Button Grid.Column="4" Grid.Row="0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
-                        Command="{Binding GenerateMigrationScript}">
-                    Generate migration script
-                </Button>
-
-            </Grid>
-
-        </Grid>
-
-
-        <Grid RowDefinitions="Auto" ColumnDefinitions="*,8,*" Margin="0 20 0 0">
-            <TextBox Watermark="New migration name" Grid.Column="0" HorizontalAlignment="Stretch"
-                     Text="{Binding NewMigrationName}">
-            </TextBox>
-
-            <Button Grid.Row="0" Grid.Column="2" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
-                    Command="{Binding CreateMigration}">
-                Create migration
-            </Button>
-        </Grid>
-
-        </StackPanel>
-        <StackPanel Grid.Row="1" SizeChanged="Control_OnSizeChanged">
-            <TextBlock Margin="0 20 0 4" FontSize="12">Output Window</TextBlock>
-            <Border Background="#C9012456" CornerRadius="4">
-                <ScrollViewer Name="ScrollOutputViewer" VerticalAlignment="Stretch" Height="400" x:Name="LogScrollViewer" HorizontalScrollBarVisibility="Auto">
-                    <SelectableTextBlock x:Name="LogViewer" Margin="0 4 0 0" Foreground="White" Padding="12 8"/>
-                </ScrollViewer>
-            </Border>
-        </StackPanel>
-    </Grid>
-
     </Panel>
 
 </Window>

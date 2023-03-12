@@ -186,6 +186,8 @@ public class Bootstrapper
             var action = new CreateMigrationAction();
             await action.ExecuteAsync(context);
         }, profileSelectedAndEnteredMigrationName);
+        
+        mainWindow.LogViewer.Inlines!.Add(new Run("Command result will appear here."));
 
         mainWindow.DataContext = mainWindowViewModel;
         return mainWindow;
