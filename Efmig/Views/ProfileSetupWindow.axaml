@@ -9,8 +9,9 @@
         WindowStartupLocation="CenterScreen"
         Width="640"
         SizeToContent="Height"
-        Title="ProfileSetupWindow"
+        Title="Profile setup"
         TransparencyLevelHint="AcrylicBlur"
+        ExtendClientAreaToDecorationsHint="True"
         Background="Transparent">
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
@@ -37,7 +38,7 @@
                     MaterialOpacity="0.65" />
             </ExperimentalAcrylicBorder.Material>
         </ExperimentalAcrylicBorder>
-        <StackPanel Margin="20">
+        <StackPanel Margin="16 36 16 16">
 
 
             <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="280,*">
