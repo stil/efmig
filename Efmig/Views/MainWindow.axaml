@@ -17,8 +17,13 @@
         <vm:MainWindowViewModel />
     </Design.DataContext>
 
-    <StackPanel Margin="20">
-        <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Vertical" Grid.Row="0">
+            <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*">
             <TextBlock VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Margin="0 0 12 0">Configuration profile</TextBlock>
 
             <Grid Grid.Row="0" Grid.Column="1" ColumnDefinitions="*,Auto,Auto">
@@ -80,12 +85,15 @@
             </Button>
         </Grid>
 
-        <TextBlock Margin="0 20 0 0" FontSize="12">Output Window</TextBlock>
-        <Border Background="#012456" CornerRadius="4">
-            <ScrollViewer VerticalAlignment="Stretch" Height="400" x:Name="LogScrollViewer" HorizontalScrollBarVisibility="Auto">
-                <SelectableTextBlock x:Name="LogViewer" Margin="0 4 0 0" Foreground="White" Padding="12 8" />
-            </ScrollViewer>
-        </Border>
-    </StackPanel>
+        </StackPanel>
+        <StackPanel Grid.Row="1" SizeChanged="Control_OnSizeChanged">
+            <TextBlock Margin="0 20 0 0" FontSize="12">Output Window</TextBlock>
+            <Border Background="#012456" CornerRadius="4">
+                <ScrollViewer Name="ScrollOutputViewer" VerticalAlignment="Stretch" Height="400" x:Name="LogScrollViewer" HorizontalScrollBarVisibility="Auto">
+                    <SelectableTextBlock x:Name="LogViewer" Margin="0 4 0 0" Foreground="White" Padding="12 8" />
+                </ScrollViewer>
+            </Border>
+        </StackPanel>
+    </Grid>
 
 </Window>

@@ -12,4 +12,16 @@ public partial class MainWindow : Window
         this.AttachDevTools();
 #endif
     }
+
+    private bool _initial = true;
+    private void Control_OnSizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        if (_initial)
+        {
+            _initial = false;
+            return;
+        }
+        if (e.HeightChanged)
+            ScrollOutputViewer.Height = e.NewSize.Height - 35;
+    }
 }
