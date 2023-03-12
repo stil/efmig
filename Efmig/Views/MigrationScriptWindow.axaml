@@ -1,0 +1,40 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:Efmig.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Efmig.Views.MigrationScriptWindow"
+        x:DataType="vm:MigrationScriptViewModel"
+        Title="Migration script"
+        Width="800"
+        SizeToContent="Height"
+        TransparencyLevelHint="AcrylicBlur"
+        Background="Transparent">
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MigrationScriptViewModel />
+    </Design.DataContext>
+
+    <Panel>
+        <ExperimentalAcrylicBorder IsHitTestVisible="False">
+            <ExperimentalAcrylicBorder.Material>
+                <ExperimentalAcrylicMaterial
+                    BackgroundSource="Digger"
+                    TintColor="Black"
+                    TintOpacity="1"
+                    MaterialOpacity="0.65" />
+            </ExperimentalAcrylicBorder.Material>
+        </ExperimentalAcrylicBorder>
+
+        <StackPanel Margin="20">
+            <Border Background="#C9012456" CornerRadius="4">
+                <ScrollViewer Name="ScrollOutputViewer" VerticalAlignment="Stretch" Height="600"
+                              x:Name="LogScrollViewer" HorizontalScrollBarVisibility="Auto">
+                    <SelectableTextBlock Text="{Binding Script}" Margin="0 4 0 0" Foreground="White" Padding="12 8" />
+                </ScrollViewer>
+            </Border>
+        </StackPanel>
+    </Panel>
+</Window>

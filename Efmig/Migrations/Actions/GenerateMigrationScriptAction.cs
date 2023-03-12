@@ -1,9 +1,7 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Runtime.InteropServices;
-using System.Text;
+﻿using System.Text;
 using System.Threading.Tasks;
+using Efmig.ViewModels;
+using Efmig.Views;
 
 namespace Efmig.Migrations.Actions;
 
@@ -23,24 +21,13 @@ public class GenerateMigrationScriptAction : IAction
                 "script"
             }
         });
-
-        var fileName = "efmig-script-" + DateTimeOffset.Now.ToUnixTimeSeconds() + ".txt";
-        await File.WriteAllTextAsync(fileName, stringBuilder.ToString());
-
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        var scriptWindow = new MigrationScriptWindow();
+        var scriptViewModel = new MigrationScriptViewModel
         {
-            await EditorLauncher.LaunchAsync(EditorLauncher.NotepadEditor, fileName);
-        }
-        else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-        {
-            await EditorLauncher.LaunchAsync(EditorLauncher.OpenTextEditEditorMacOS, fileName);
-        }
-        else
-        {
-            ctx.LogError("Linux is not supported.");
-        }
+            Script = stringBuilder.ToString()
+        };
+        scriptWindow.DataContext = scriptViewModel;
 
-        await Task.Delay(2000);
-        File.Delete(fileName);
+        scriptWindow.Show();
     }
 }
