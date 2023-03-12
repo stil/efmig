@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using Efmig.ViewModels;
 using Efmig.Views;
@@ -24,7 +25,7 @@ public class GenerateMigrationScriptAction : IAction
         var scriptWindow = new MigrationScriptWindow();
         var scriptViewModel = new MigrationScriptViewModel
         {
-            Script = stringBuilder.ToString()
+            Script = File.ReadAllText(@"/Users/m/Downloads/migration.txt")// stringBuilder.ToString()
         };
         scriptWindow.DataContext = scriptViewModel;
 

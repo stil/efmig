@@ -18,4 +18,5 @@ public partial class MigrationScriptWindow : Window
     {
         AvaloniaXamlLoader.Load(this);
     }
+
 }
