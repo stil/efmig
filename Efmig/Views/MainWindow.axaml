@@ -36,7 +36,7 @@
                 </ExperimentalAcrylicMaterial>
             </ExperimentalAcrylicBorder.Material>
         </ExperimentalAcrylicBorder>
-        <StackPanel Margin="20">
+        <StackPanel Margin="14 32 14 14">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"></RowDefinition>
