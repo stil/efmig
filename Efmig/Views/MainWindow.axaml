@@ -133,8 +133,7 @@
                             
                         <ScrollViewer Name="ScrollOutputViewer" VerticalAlignment="Stretch" Height="400"
                                       x:Name="LogScrollViewer" HorizontalScrollBarVisibility="Auto">
-                            <SelectableTextBlock x:Name="LogViewer" Foreground="White" Padding="12"
-                                                Text="Command result will appear here."  />
+                            <SelectableTextBlock x:Name="LogViewer" Foreground="White" Padding="12" />
                         </ScrollViewer>
                             
                        
