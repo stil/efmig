@@ -43,41 +43,14 @@
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
-                <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="0" Margin="12 32 12 12" HorizontalAlignment="Stretch">
-                    <TextBlock VerticalAlignment="Center" Margin="0 12 12 0">Configuration profile</TextBlock>
-                    <DockPanel HorizontalAlignment="Stretch" >
-                       
-                        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
-                            <Button HorizontalAlignment="Stretch" Margin="4" Command="{Binding EditProfile}">
-                                <PathIcon Data="{StaticResource EditSettingsRegular}" />
-                            </Button>
-                            <Button Margin="4" HorizontalAlignment="Stretch" VerticalContentAlignment="Center"
-                                    Command="{Binding AddProfile}">
-                                <PathIcon Data="{StaticResource AddSquareRegular}"></PathIcon>
-                            </Button>
-                        </StackPanel>
-                        <ComboBox
-                            DockPanel.Dock="Left"
-                            Margin="4"
-                            MinWidth="200"
-                            SelectedItem="{Binding SelectedConfigurationProfile}"
-                            HorizontalAlignment="Stretch"
-                            Items="{Binding ConfigurationProfileIds}"
-                            IsEnabled="{Binding ConfigurationProfileIds.Count}"
-                            x:Name="OptionDotnetEfVersion">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock HorizontalAlignment="Stretch" Text="{Binding }" />
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                      
-                    </DockPanel>
+                <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="1" Margin="12 0 12 12" HorizontalAlignment="Stretch">
+                    
 
 
-                    <TextBlock VerticalAlignment="Center" Margin="0 16 12 0">Create migration</TextBlock>
+                    <TextBlock VerticalAlignment="Center" Margin="0 0 12 0">Create migration</TextBlock>
 
                     <DockPanel HorizontalAlignment="Stretch">
                         <Button
@@ -116,22 +89,57 @@
 
                 </StackPanel>
 
-                <StackPanel Grid.Column="0" Grid.Row="1" VerticalAlignment="Bottom">
+                <StackPanel Grid.Column="0" Grid.Row="2" VerticalAlignment="Bottom">
                     <Button x:Name="ProjectUrl" Background="Transparent" Click="ProjectUrl_OnClick">
                         <PathIcon Data="{StaticResource Github}"></PathIcon>
                     </Button>
                 </StackPanel>
-                    <Border Grid.Row="0" Grid.RowSpan="2" Grid.Column="1"  Background="#012456" VerticalAlignment="Stretch" SizeChanged="Control_OnSizeChanged">
+                
+             
+                <DockPanel Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" >
+                       
+                    <Label DockPanel.Dock="Left" VerticalAlignment="Center">Profile:</Label>
+
+                    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                        <Button Margin="4" Command="{Binding EditProfile}">
+                            <PathIcon Data="{StaticResource EditSettingsRegular}" />
+                        </Button>
+                        <Button Margin="4"  VerticalContentAlignment="Center"
+                                Command="{Binding AddProfile}">
+                            <PathIcon Data="{StaticResource AddSquareRegular}"></PathIcon>
+                        </Button>
+                    </StackPanel>
+                    <ComboBox
+                        DockPanel.Dock="Left"
+                        
+                        Margin="12"
+                        Width="460"
+                        SelectedItem="{Binding SelectedConfigurationProfile}"
+                        HorizontalAlignment="Stretch"
+                        Items="{Binding ConfigurationProfileIds}"
+                        IsEnabled="{Binding ConfigurationProfileIds.Count}"
+                        x:Name="OptionDotnetEfVersion">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding }" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                      
+                </DockPanel>
+                    
+                    <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" DockPanel.Dock="Bottom" Background="#012456" CornerRadius="4 0 0 0" VerticalAlignment="Stretch" SizeChanged="Control_OnSizeChanged">
                         
                             
-                            <ScrollViewer Name="ScrollOutputViewer" VerticalAlignment="Stretch" Height="400"
-                                          x:Name="LogScrollViewer" HorizontalScrollBarVisibility="Auto">
-                                <SelectableTextBlock x:Name="LogViewer" Foreground="White" Padding="12"
-                                                     Text="Command result will be shown here." />
-                            </ScrollViewer>
+                        <ScrollViewer Name="ScrollOutputViewer" VerticalAlignment="Stretch" Height="400"
+                                      x:Name="LogScrollViewer" HorizontalScrollBarVisibility="Auto">
+                            <SelectableTextBlock x:Name="LogViewer" Foreground="White" Padding="12"
+                                                Text="Command result will appear here."  />
+                        </ScrollViewer>
                             
                        
                     </Border>
+                
             </Grid>
     </Panel>
 
