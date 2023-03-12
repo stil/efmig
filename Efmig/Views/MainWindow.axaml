@@ -9,7 +9,10 @@
         Icon="/Assets/avalonia-logo.ico"
         Width="720"
         SizeToContent="Height"
-        Title="efmig">
+        Title="efmig"
+        TransparencyLevelHint="AcrylicBlur"
+        Background="Transparent"
+        >
 
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
@@ -17,6 +20,17 @@
         <vm:MainWindowViewModel />
     </Design.DataContext>
 
+    <Panel>
+        <ExperimentalAcrylicBorder IsHitTestVisible="False">
+            <ExperimentalAcrylicBorder.Material>
+                <ExperimentalAcrylicMaterial
+                    BackgroundSource="Digger"
+                    TintColor="Black"
+                    TintOpacity="1"
+                    MaterialOpacity="0.65" />
+            </ExperimentalAcrylicBorder.Material>
+        </ExperimentalAcrylicBorder>
+        
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -87,13 +101,15 @@
 
         </StackPanel>
         <StackPanel Grid.Row="1" SizeChanged="Control_OnSizeChanged">
-            <TextBlock Margin="0 20 0 0" FontSize="12">Output Window</TextBlock>
-            <Border Background="#012456" CornerRadius="4">
+            <TextBlock Margin="0 20 0 4" FontSize="12">Output Window</TextBlock>
+            <Border Background="#C9012456" CornerRadius="4">
                 <ScrollViewer Name="ScrollOutputViewer" VerticalAlignment="Stretch" Height="400" x:Name="LogScrollViewer" HorizontalScrollBarVisibility="Auto">
-                    <SelectableTextBlock x:Name="LogViewer" Margin="0 4 0 0" Foreground="White" Padding="12 8" />
+                    <SelectableTextBlock x:Name="LogViewer" Margin="0 4 0 0" Foreground="White" Padding="12 8"/>
                 </ScrollViewer>
             </Border>
         </StackPanel>
     </Grid>
+
+    </Panel>
 
 </Window>
