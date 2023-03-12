@@ -1,32 +1,93 @@
-name: dotnet package
+name: Build efmig
 
 on: [ push ]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
     strategy:
       matrix:
-        dotnet-version: [ '7.0.x' ]
-
+        platform: [ ubuntu-latest, macos-latest, windows-latest ]
+    runs-on: ${{ matrix.platform }}
     steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-      - name: Check out repository code
-        uses: actions/checkout@v3
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-      - name: List files in the repository
-        run: |
-          ls ${{ github.workspace }}
-      - run: echo "🍏 This job's status is ${{ job.status }}."
       - uses: actions/checkout@v3
       - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: ${{ matrix.dotnet-version }}
+          dotnet-version: 7.0.x
       - name: Install dependencies
         run: dotnet restore
-      - name: Build
-        run: dotnet build --configuration Release --no-restore
+      # Publish for all RIDs
+      - name: Build win10-x64
+        run: dotnet publish --configuration Release --no-restore -r win10-x64
+      - name: Build win10-arm64
+        run: dotnet publish --configuration Release --no-restore -r win10-arm64
+      - name: Build linux-x64
+        run: dotnet publish --configuration Release --no-restore -r linux-x64
+      - name: Build linux-arm64
+        run: dotnet publish --configuration Release --no-restore -r linux-arm64
+      - name: Build osx-x64
+        run: dotnet publish --configuration Release --no-restore -r osx-x64
+      - name: Build osx.11.0-arm64
+        run: dotnet publish --configuration Release --no-restore -r osx.11.0-arm64
+#        
+#
+#      - name: Zip Linux x64
+#        if: matrix.platform == 'ubuntu-latest'
+#        run: 7z a -tzip artifacts/efmig-linux-x64-Release.zip artifacts/linux-x64/*
+#      - name: Zip Linux arm64
+#        if: matrix.platform == 'ubuntu-latest'
+#        run: 7z a -tzip artifacts/efmig-linux-arm64-Release.zip artifacts/linux-arm64/*
+#      - name: Zip MacOS x64
+#        if: matrix.platform == 'macos-latest'
+#        run: 7z a -tzip artifacts/efmig-macos-x64-Release.zip artifacts/osx-x64/*
+#      - name: Zip MacOS arm64
+#        if: matrix.platform == 'macos-latest'
+#        run: 7z a -tzip artifacts/efmig-macos-arm64-Release.zip artifacts/osx-arm64/*
+#      - name: Zip Windows x64
+#        if: matrix.platform == 'windows-latest'
+#        run: 7z a -tzip artifacts\efmig-win-x64-Release.zip artifacts\win-x64\*
+#      - name: Zip Windows arm64
+#        if: matrix.platform == 'windows-latest'
+#        run: 7z a -tzip artifacts\efmig-win-arm64-Release.zip artifacts\win-arm64\*
+#      - name: Upload Linux x64 artifacts
+#        if: matrix.platform == 'ubuntu-latest'
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: Linux x64 Release
+#          path: artifacts/efmig-linux-x64-Release.zip
+#          if-no-files-found: error
+#      - name: Upload Linux arm64 artifacts
+#        if: matrix.platform == 'ubuntu-latest'
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: Linux arm64 Release
+#          path: artifacts/efmig-linux-arm64-Release.zip
+#          if-no-files-found: error
+#      - name: Upload macOS x64 artifacts
+#        if: matrix.platform == 'macos-latest'
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: macOS x64 Release
+#          path: artifacts/efmig-macos-x64-Release.zip
+#          if-no-files-found: error
+#      - name: Upload macOS arm64 artifacts
+#        if: matrix.platform == 'macos-latest'
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: macOS arm64 Release
+#          path: artifacts/efmig-macos-arm64-Release.zip
+#          if-no-files-found: error
+#      - name: Upload Windows x64 artifacts
+#        if: matrix.platform == 'windows-latest'
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: Windows x64 Release
+#          path: artifacts/efmig-win-x64-Release.zip
+#          if-no-files-found: error
+#      - name: Upload Windows arm64 artifacts
+#        if: matrix.platform == 'windows-latest'
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: Windows arm64 Release
+#          path: artifacts/efmig-win-arm64-Release.zip
+#          if-no-files-found: error
