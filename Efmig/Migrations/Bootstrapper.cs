@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using Avalonia.Controls;
 using Avalonia.Controls.Documents;
+using Avalonia.Platform.Storage;
 using DynamicData;
 using Efmig.Migrations.Actions;
 using Efmig.ViewModels;
@@ -52,20 +53,20 @@ public class Bootstrapper
 
             setupViewModel.DbContextCsprojSelect = ReactiveCommand.CreateFromTask(async () =>
             {
-                var dialog = new OpenFileDialog
+                var result = await setupWindow.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions()
                 {
-                    Filters = new List<FileDialogFilter>
+                    FileTypeFilter = new[]
                     {
-                        new()
+                        new FilePickerFileType("C# Project")
                         {
-                            Extensions = new List<string> { "csproj" }
+                            Patterns = new[] { "*.csproj" }
                         }
                     }
-                };
-                var result = await dialog.ShowAsync(setupWindow);
-                if (result is { Length: 1 })
+                });
+
+                if (result.Count == 1)
                 {
-                    setupViewModel.DbContextCsprojPath = result[0];
+                    setupViewModel.DbContextCsprojPath = result[0].Path.AbsolutePath;
                 }
             });
 
