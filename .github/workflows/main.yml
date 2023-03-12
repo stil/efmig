@@ -16,18 +16,26 @@ jobs:
           dotnet-version: 7.0.x
       - name: Install dependencies
         run: dotnet restore
-      # Publish for all RIDs
+      # dotnet publish for Windows
       - name: Build win10-x64
+        if: matrix.platform == 'windows-latest'
         run: dotnet publish --configuration Release --no-restore -r win10-x64
       - name: Build win10-arm64
+        if: matrix.platform == 'windows-latest'
         run: dotnet publish --configuration Release --no-restore -r win10-arm64
       - name: Build linux-x64
+      # dotnet publish for Linux
+        if: matrix.platform == 'ubuntu-latest'
         run: dotnet publish --configuration Release --no-restore -r linux-x64
       - name: Build linux-arm64
+        if: matrix.platform == 'ubuntu-latest'
         run: dotnet publish --configuration Release --no-restore -r linux-arm64
+      # dotnet publish for macOS
       - name: Build osx-x64
+        if: matrix.platform == 'macos-latest'
         run: dotnet publish --configuration Release --no-restore -r osx-x64
       - name: Build osx.11.0-arm64
+        if: matrix.platform == 'macos-latest'
         run: dotnet publish --configuration Release --no-restore -r osx.11.0-arm64
 #        
 #
