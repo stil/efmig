@@ -42,31 +42,13 @@ public class Bootstrapper
         {
             setupViewModel.WindowTitle = existingProfile != null ? "Edit profile" : "Create new profile";
             setupViewModel.ProfileName = existingProfile?.Name ?? "";
-            setupViewModel.DotnetEfVersionSelected = existingProfile?.DotnetEfVersion ?? "";
-            setupViewModel.EfCoreDesignVersionSelected = existingProfile?.EfCoreDesignVersion ?? "";
-            setupViewModel.RuntimeVersionSelected = existingProfile?.RuntimeVersion ?? "";
+            setupViewModel.DotnetEfVersionSelected = existingProfile?.DotnetEfVersion ?? "7.0.3";
+            setupViewModel.EfCoreDesignVersionSelected = existingProfile?.EfCoreDesignVersion ?? "7.0.3";
+            setupViewModel.RuntimeVersionSelected = existingProfile?.RuntimeVersion ?? "net7.0";
             setupViewModel.DbContextCsprojPath = existingProfile?.DbContextCsprojPath ?? "";
             setupViewModel.DbContextFullName = existingProfile?.DbContextFullName ?? "";
             setupViewModel.DbContextConfigCode =
                 existingProfile?.DbContextConfigCode ?? "optionsBuilder.UseNpgsql(\"\")";
-
-            setupViewModel.DotnetEfVersionOptions = new List<string>
-            {
-                "7.0.3",
-                "6.0.14"
-            };
-
-            setupViewModel.EfCoreDesignVersionOptions = new List<string>
-            {
-                "7.0.3",
-                "6.0.14"
-            };
-
-            setupViewModel.RuntimeVersionOptions = new List<string>
-            {
-                "net7.0",
-                "net6.0"
-            };
 
             setupViewModel.DbContextCsprojSelect = ReactiveCommand.CreateFromTask(async () =>
             {
