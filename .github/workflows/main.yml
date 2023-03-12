@@ -48,13 +48,13 @@ jobs:
           
       # Build linux-x64
       - name: Build linux-x64
-        if: matrix.platform == 'linux-latest'
+        if: matrix.platform == 'ubuntu-latest'
         run: dotnet publish --configuration Release --self-contained -p:PublishSingleFile=true -r linux-x64
       - name: ZIP linux-x64
-        if: matrix.platform == 'linux-latest'
+        if: matrix.platform == 'ubuntu-latest'
         run: 7z a -tzip artifacts/efmig-linux-x64-Release.zip ./Efmig/bin/Release/net7.0/linux-x64/publish/*
       - name: Upload linux-x64 artifacts
-        if: matrix.platform == 'linux-latest'
+        if: matrix.platform == 'ubuntu-latest'
         uses: actions/upload-artifact@v3
         with:
           name: linux-x64
@@ -63,13 +63,13 @@ jobs:
           
       # Build linux-arm64
       - name: Build linux-arm64
-        if: matrix.platform == 'linux-latest'
+        if: matrix.platform == 'ubuntu-latest'
         run: dotnet publish --configuration Release --self-contained -p:PublishSingleFile=true -r linux-arm64
       - name: ZIP linux-arm64
-        if: matrix.platform == 'linux-latest'
+        if: matrix.platform == 'ubuntu-latest'
         run: 7z a -tzip artifacts/efmig-linux-arm64-Release.zip ./Efmig/bin/Release/net7.0/linux-arm64/publish/*
       - name: Upload linux-arm64 artifacts
-        if: matrix.platform == 'linux-latest'
+        if: matrix.platform == 'ubuntu-latest'
         uses: actions/upload-artifact@v3
         with:
           name: linux-arm64
