@@ -6,12 +6,10 @@ namespace Efmig.ViewModels;
 
 public class ProfileSetupWindowViewModel : ViewModelBase
 {
+    [Reactive] public string WindowTitle { get; set; }
     [Reactive] public string ProfileName { get; set; }
-    [Reactive] public List<string> DotnetEfVersionOptions { get; set; }
     [Reactive] public string DotnetEfVersionSelected { get; set; }
-    [Reactive] public List<string> EfCoreDesignVersionOptions { get; set; }
     [Reactive] public string EfCoreDesignVersionSelected { get; set; }
-    [Reactive] public List<string> RuntimeVersionOptions { get; set; }
     [Reactive] public string RuntimeVersionSelected { get; set; }
     [Reactive] public string DbContextCsprojPath { get; set; }
     [Reactive] public ICommand DbContextCsprojSelect { get; set; }

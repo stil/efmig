@@ -37,10 +37,4 @@
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
     </ItemGroup>
-
-    <ItemGroup>
-      <Reference Include="Avalonia.Themes.Fluent">
-        <HintPath>C:\Users\user\.nuget\packages\avalonia\0.10.18\lib\netcoreapp2.0\Avalonia.Themes.Fluent.dll</HintPath>
-      </Reference>
-    </ItemGroup>
 </Project>

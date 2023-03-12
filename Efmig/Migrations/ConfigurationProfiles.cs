@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
+using NLog;
 
 namespace Efmig.Migrations;
 
 public static class ProfilesManager
 {
+    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
     private static string ConfigurationFilePath =>
         Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "efmig.json");
 
@@ -32,6 +35,8 @@ public static class ProfilesManager
         }
         catch (Exception e)
         {
+            Logger.Warn(e, "Could not load profiles.");
+
             // Possibly file missing.
             return new List<ConfigurationProfile>();
         }
