@@ -6,6 +6,7 @@ namespace Efmig.ViewModels;
 
 public class ProfileSetupWindowViewModel : ViewModelBase
 {
+    [Reactive] public string WindowTitle { get; set; }
     [Reactive] public string ProfileName { get; set; }
     [Reactive] public List<string> DotnetEfVersionOptions { get; set; }
     [Reactive] public string DotnetEfVersionSelected { get; set; }

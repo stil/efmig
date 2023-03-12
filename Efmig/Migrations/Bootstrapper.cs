@@ -40,6 +40,7 @@ public class Bootstrapper
         void InitializeProfileSetupViewModel(ProfileSetupWindowViewModel setupViewModel, ProfileSetupWindow setupWindow,
             ConfigurationProfile existingProfile)
         {
+            setupViewModel.WindowTitle = existingProfile != null ? "Edit profile" : "Create new profile";
             setupViewModel.ProfileName = existingProfile?.Name ?? "";
             setupViewModel.DotnetEfVersionSelected = existingProfile?.DotnetEfVersion ?? "";
             setupViewModel.EfCoreDesignVersionSelected = existingProfile?.EfCoreDesignVersion ?? "";

@@ -9,7 +9,7 @@
         WindowStartupLocation="CenterScreen"
         Width="640"
         SizeToContent="Height"
-        Title="ProfileSetupWindow"
+        Title="{Binding WindowTitle}"
         TransparencyLevelHint="AcrylicBlur"
         Background="Transparent">
     <Design.DataContext>
