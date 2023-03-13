@@ -32,7 +32,6 @@ const template = `
 name: Build efmig
 
 on:
-  - workflow_dispatch
   push:
     branches: [ "master" ]
   pull_request:
