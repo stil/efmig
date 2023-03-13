@@ -13,7 +13,7 @@ jobs:
   build:
     strategy:
       matrix:
-        platform: [ ubuntu-latest, macos-latest ]
+        platform: [ ubuntu-latest, macos-latest, windows-latest ]
     runs-on: ${{ matrix.platform }}
     steps:
       - uses: actions/checkout@v3
@@ -25,13 +25,13 @@ jobs:
       
       # Build win-x64
       - name: Build win-x64
-        if: matrix.platform == 'ubuntu-latest'
+        if: matrix.platform == 'windows-latest'
         run: dotnet publish --configuration Release --self-contained -p:PublishSingleFile=true -r win10-x64
       #- name: ZIP win-x64
-      #  if: matrix.platform == 'ubuntu-latest'
+      #  if: matrix.platform == 'windows-latest'
       #  run: 7z a -tzip artifacts/efmig-win-x64-Release.zip ./Efmig/bin/Release/net7.0/win10-x64/publish/*
       - name: Upload win-x64 artifacts
-        if: matrix.platform == 'ubuntu-latest'
+        if: matrix.platform == 'windows-latest'
         uses: actions/upload-artifact@v3
         with:
           name: efmig-win-x64-Release
@@ -40,13 +40,13 @@ jobs:
           
       # Build win-arm64
       - name: Build win-arm64
-        if: matrix.platform == 'ubuntu-latest'
+        if: matrix.platform == 'windows-latest'
         run: dotnet publish --configuration Release --self-contained -p:PublishSingleFile=true -r win10-arm64
       #- name: ZIP win-arm64
-      #  if: matrix.platform == 'ubuntu-latest'
+      #  if: matrix.platform == 'windows-latest'
       #  run: 7z a -tzip artifacts/efmig-win-arm64-Release.zip ./Efmig/bin/Release/net7.0/win10-arm64/publish/*
       - name: Upload win-arm64 artifacts
-        if: matrix.platform == 'ubuntu-latest'
+        if: matrix.platform == 'windows-latest'
         uses: actions/upload-artifact@v3
         with:
           name: efmig-win-arm64-Release

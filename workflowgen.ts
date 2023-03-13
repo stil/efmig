@@ -17,8 +17,8 @@ const platformTemplateGen = (name: string, rid: string, platform: string) =>
           `;
 
 const extraSteps = [
-  platformTemplateGen("win-x64", "win10-x64", "ubuntu-latest"),
-  platformTemplateGen("win-arm64", "win10-arm64", "ubuntu-latest"),
+  platformTemplateGen("win-x64", "win10-x64", "windows-latest"),
+  platformTemplateGen("win-arm64", "win10-arm64", "windows-latest"),
   platformTemplateGen("linux-x64", "linux-x64", "ubuntu-latest"),
   platformTemplateGen("linux-arm64", "linux-arm64", "ubuntu-latest"),
   platformTemplateGen("osx-x64", "osx-x64", "macos-latest"),
