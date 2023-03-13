@@ -2,6 +2,8 @@
 
 This is a multi-platform GUI application that greatly speeds up development when using Entity Framework Core.
 
+[![build](https://github.com/stil/efmig/actions/workflows/build.yml/badge.svg)](https://github.com/stil/efmig/actions/workflows/build.yml)
+
 ![alt text](images/main.png)
 
 
