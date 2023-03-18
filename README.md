@@ -23,6 +23,7 @@ Why you should use it:
    - dotnet-ef version: See [NuGet page](https://www.nuget.org/packages/dotnet-ef/#versions-body-tab) for available versions. Enter version matching your project.
    - Microsoft.EntityFrameworkCore.Design version: See [NuGet page](https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Design/#versions-body-tab) for available versions.
    - Target framework version: See [this reference table](https://learn.microsoft.com/en-us/dotnet/standard/frameworks#supported-target-frameworks) for available versions.
+   - Migrations directory. Enter a path relative to location of C# project where DbContext exists. Default value is `Migrations`.
    - DbContext .csproj path: pick the path of C# project that holds your DbContext class.
    - DbContext fully qualified name: this is a full class name of DbContext, for example `MyApp.MyDbContext`.
    - DbContext configuration code: here you need to configure connection string for `dotnet-ef` to work. See [explanation below](#dbcontext-configuration-code). 
