@@ -57,4 +57,5 @@ public class ConfigurationProfile
     public string DbContextCsprojPath { get; set; }
     public string DbContextFullName { get; set; }
     public string DbContextConfigCode { get; set; }
+    public string MigrationsDir { get; set; }
 }

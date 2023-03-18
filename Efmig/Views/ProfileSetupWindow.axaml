@@ -41,7 +41,7 @@
         <StackPanel Margin="16 36 16 16">
 
 
-            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="280,*">
+            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="280,*">
 
                 <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="0 0 12 0">Profile name</TextBlock>
                 <TextBox Grid.Row="0" Grid.Column="1" Margin="0 4" Text="{Binding ProfileName}"
@@ -61,23 +61,28 @@
                 <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="0 0 12 0">Target framework version</TextBlock>
                 <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding RuntimeVersionSelected}" Margin="0 4"
                          HorizontalAlignment="Stretch" />
+                
+                <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="0 0 12 0">Migrations directory</TextBlock>
+                <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding MigrationsDir}" Margin="0 4"
+                         HorizontalAlignment="Stretch" Watermark="Migrations" />
 
-                <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="0 0 12 0">DbContext .csproj path</TextBlock>
-                <Grid Grid.Row="4" Grid.Column="1" ColumnDefinitions="*,4,Auto">
+
+                <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Margin="0 0 12 0">DbContext .csproj path</TextBlock>
+                <Grid Grid.Row="5" Grid.Column="1" ColumnDefinitions="*,4,Auto">
                     <TextBox Margin="0 4" HorizontalAlignment="Stretch"
                              IsReadOnly="True" Text="{Binding DbContextCsprojPath, Mode=TwoWay}" />
                     <Button Grid.Column="2" Command="{Binding DbContextCsprojSelect}">...</Button>
                 </Grid>
 
-                <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Margin="0 0 12 0"
+                <TextBlock Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Margin="0 0 12 0"
                            TextWrapping="Wrap">
                     DbContext fully qualified name
                 </TextBlock>
-                <TextBox Grid.Row="5" Grid.Column="1" Margin="0 4" HorizontalAlignment="Stretch"
+                <TextBox Grid.Row="6" Grid.Column="1" Margin="0 4" HorizontalAlignment="Stretch"
                          Text="{Binding DbContextFullName}" Watermark="MyApp.MyDbContext" />
 
-                <TextBlock Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Margin="0 0 12 0">DbContext configuration code</TextBlock>
-                <TextBox Grid.Row="6" Grid.Column="1" Margin="0 4" HorizontalAlignment="Stretch" AcceptsReturn="True"
+                <TextBlock Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" Margin="0 0 12 0">DbContext configuration code</TextBlock>
+                <TextBox Grid.Row="7" Grid.Column="1" Margin="0 4" HorizontalAlignment="Stretch" AcceptsReturn="True"
                          Height="100"
                          Text="{Binding DbContextConfigCode}" />
             </Grid>

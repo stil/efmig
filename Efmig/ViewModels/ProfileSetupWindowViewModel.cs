@@ -15,6 +15,7 @@ public class ProfileSetupWindowViewModel : ViewModelBase
     [Reactive] public ICommand DbContextCsprojSelect { get; set; }
     [Reactive] public string DbContextFullName { get; set; }
     [Reactive] public string DbContextConfigCode { get; set; }
+    [Reactive] public string MigrationsDir { get; set; }
     [Reactive] public ICommand Save { get; set; }
     [Reactive] public DeleteProfileViewModel DeleteProfile { get; set; }
 }

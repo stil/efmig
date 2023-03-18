@@ -35,6 +35,7 @@ public class Bootstrapper
                 DbContextFullName = viewModel.DbContextFullName,
                 DotnetEfVersion = viewModel.DotnetEfVersionSelected,
                 EfCoreDesignVersion = viewModel.EfCoreDesignVersionSelected,
+                MigrationsDir = viewModel.MigrationsDir
             };
         }
 
@@ -50,6 +51,7 @@ public class Bootstrapper
             setupViewModel.DbContextFullName = existingProfile?.DbContextFullName ?? "";
             setupViewModel.DbContextConfigCode =
                 existingProfile?.DbContextConfigCode ?? "optionsBuilder.UseNpgsql(\"\")";
+            setupViewModel.MigrationsDir = existingProfile?.MigrationsDir ?? "";
 
             setupViewModel.DbContextCsprojSelect = ReactiveCommand.CreateFromTask(async () =>
             {
