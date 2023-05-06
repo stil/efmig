@@ -21,11 +21,7 @@
         <vm:MainWindowViewModel />
     </Design.DataContext>
 
-    <Window.Resources>
-
-    </Window.Resources>
     <Panel>
-
         <ExperimentalAcrylicBorder IsHitTestVisible="False">
             <ExperimentalAcrylicBorder.Material>
                 <ExperimentalAcrylicMaterial
@@ -35,111 +31,91 @@
                     MaterialOpacity="0.65" />
             </ExperimentalAcrylicBorder.Material>
         </ExperimentalAcrylicBorder>
-            <Grid >
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
 
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="*"></RowDefinition>
-                </Grid.RowDefinitions>
-                <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="1" Margin="12 0 12 12" HorizontalAlignment="Stretch">
-                    
+        <Grid ColumnDefinitions="250,*" RowDefinitions="Auto,Auto,*">
+            <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="1" Margin="12 0 12 12"
+                        HorizontalAlignment="Stretch">
 
+                <TextBlock VerticalAlignment="Center" Margin="0 0 12 0">Create migration</TextBlock>
 
-                    <TextBlock VerticalAlignment="Center" Margin="0 0 12 0">Create migration</TextBlock>
-
-                    <DockPanel HorizontalAlignment="Stretch">
-                        <Button
-                            DockPanel.Dock="Right"
-                            Margin="4" HorizontalAlignment="Stretch"
-                                HorizontalContentAlignment="Center"
-                                Command="{Binding CreateMigration}">
-                            <PathIcon Data="{StaticResource AddSquareRegular}"></PathIcon>
-                        </Button>
-                        <TextBox DockPanel.Dock="Left" Margin="4" Watermark="New migration name" HorizontalAlignment="Stretch"
-                                 Text="{Binding NewMigrationName}" />
-
-                        
-                    </DockPanel>
-
-                    <TextBlock VerticalAlignment="Center" Margin="0 16 12 0">Actions</TextBlock>
-
-                    <Button Margin="4" VerticalAlignment="Top" HorizontalAlignment="Stretch"
-                            HorizontalContentAlignment="Center" Command="{Binding ListMigrations}">
-                        List migrations
+                <Grid ColumnDefinitions="*,Auto">
+                    <TextBox Grid.Column="0" Margin="4" Watermark="New migration name"
+                             HorizontalAlignment="Stretch"
+                             Text="{Binding NewMigrationName}" />
+                    <Button
+                        Grid.Column="1" Margin="4" HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center"
+                        Command="{Binding CreateMigration}">
+                        <PathIcon Data="{StaticResource AddSquareRegular}"></PathIcon>
                     </Button>
+                </Grid>
 
-                    <Button Margin="4" VerticalAlignment="Top" HorizontalAlignment="Stretch"
-                            HorizontalContentAlignment="Center" Command="{Binding RemoveLastMigration}">
-                        Remove most recent migration
+                <TextBlock VerticalAlignment="Center" Margin="0 16 12 0">Actions</TextBlock>
+
+                <Button Margin="4" VerticalAlignment="Top" HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center" Command="{Binding ListMigrations}">
+                    List migrations
+                </Button>
+
+                <Button Margin="4" VerticalAlignment="Top" HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center" Command="{Binding RemoveLastMigration}">
+                    Remove most recent migration
+                </Button>
+
+                <Button Margin="4" HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center"
+                        Command="{Binding GenerateMigrationScript}">
+                    Generate migration script
+                </Button>
+            </StackPanel>
+
+            <StackPanel Grid.Column="0" Grid.Row="2" VerticalAlignment="Bottom">
+                <Button x:Name="ProjectUrl" Background="Transparent" Click="ProjectUrl_OnClick">
+                    <PathIcon Data="{StaticResource Github}"></PathIcon>
+                </Button>
+            </StackPanel>
+
+            <DockPanel Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left">
+
+                <Label DockPanel.Dock="Left" VerticalAlignment="Center">Profile:</Label>
+
+                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                    <Button Margin="4" Command="{Binding EditProfile}">
+                        <PathIcon Data="{StaticResource EditSettingsRegular}" />
                     </Button>
-
-                    <Button Margin="4" HorizontalAlignment="Stretch"
-                            HorizontalContentAlignment="Center"
-                            Command="{Binding GenerateMigrationScript}">
-                        Generate migration script
-                    </Button>
-
-                    
-                  
-
-                </StackPanel>
-
-                <StackPanel Grid.Column="0" Grid.Row="2" VerticalAlignment="Bottom">
-                    <Button x:Name="ProjectUrl" Background="Transparent" Click="ProjectUrl_OnClick">
-                        <PathIcon Data="{StaticResource Github}"></PathIcon>
+                    <Button Margin="4" VerticalContentAlignment="Center"
+                            Command="{Binding AddProfile}">
+                        <PathIcon Data="{StaticResource AddSquareRegular}"></PathIcon>
                     </Button>
                 </StackPanel>
-                
-             
-                <DockPanel Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" >
-                       
-                    <Label DockPanel.Dock="Left" VerticalAlignment="Center">Profile:</Label>
+                <ComboBox
+                    DockPanel.Dock="Left"
 
-                    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
-                        <Button Margin="4" Command="{Binding EditProfile}">
-                            <PathIcon Data="{StaticResource EditSettingsRegular}" />
-                        </Button>
-                        <Button Margin="4"  VerticalContentAlignment="Center"
-                                Command="{Binding AddProfile}">
-                            <PathIcon Data="{StaticResource AddSquareRegular}"></PathIcon>
-                        </Button>
-                    </StackPanel>
-                    <ComboBox
-                        DockPanel.Dock="Left"
-                        
-                        Margin="8"
-                        Width="460"
-                        SelectedItem="{Binding SelectedConfigurationProfile}"
-                        HorizontalAlignment="Stretch"
-                        Items="{Binding ConfigurationProfileIds}"
-                        IsEnabled="{Binding ConfigurationProfileIds.Count}"
-                        x:Name="OptionDotnetEfVersion">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding }" />
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
-                      
-                </DockPanel>
-                    
-                    <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" DockPanel.Dock="Bottom" Background="#012456" CornerRadius="4 0 0 0" VerticalAlignment="Stretch" SizeChanged="Control_OnSizeChanged">
-                        
-                            
-                        <ScrollViewer Name="ScrollOutputViewer" VerticalAlignment="Stretch" Height="400"
-                                      x:Name="LogScrollViewer" HorizontalScrollBarVisibility="Auto">
-                            <SelectableTextBlock x:Name="LogViewer" Foreground="White" Padding="12" />
-                        </ScrollViewer>
-                            
-                       
-                    </Border>
-                
-            </Grid>
+                    Margin="8"
+                    Width="460"
+                    SelectedItem="{Binding SelectedConfigurationProfile}"
+                    HorizontalAlignment="Stretch"
+                    Items="{Binding ConfigurationProfileIds}"
+                    IsEnabled="{Binding ConfigurationProfileIds.Count}"
+                    x:Name="OptionDotnetEfVersion">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding }" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+            </DockPanel>
+
+            <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" DockPanel.Dock="Bottom" Background="#012456"
+                    CornerRadius="4 0 0 0" VerticalAlignment="Stretch" SizeChanged="Control_OnSizeChanged">
+
+                <ScrollViewer Name="ScrollOutputViewer" VerticalAlignment="Stretch" Height="400"
+                              x:Name="LogScrollViewer" HorizontalScrollBarVisibility="Auto">
+                    <SelectableTextBlock x:Name="LogViewer" Foreground="White" Padding="12" />
+                </ScrollViewer>
+            </Border>
+        </Grid>
     </Panel>
 
 </Window>
