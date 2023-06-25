@@ -90,12 +90,11 @@
                 </StackPanel>
                 <ComboBox
                     DockPanel.Dock="Left"
-
                     Margin="8"
                     Width="460"
                     SelectedItem="{Binding SelectedConfigurationProfile}"
                     HorizontalAlignment="Stretch"
-                    Items="{Binding ConfigurationProfileIds}"
+                    ItemsSource="{Binding ConfigurationProfileIds}"
                     IsEnabled="{Binding ConfigurationProfileIds.Count}"
                     x:Name="OptionDotnetEfVersion">
                     <ComboBox.ItemTemplate>
