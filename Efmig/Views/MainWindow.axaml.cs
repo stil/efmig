@@ -25,22 +25,6 @@ public partial class MainWindow : Window
 
     private void ProjectUrl_OnClick(object sender, RoutedEventArgs e)
     {
-        Dispatcher.UIThread.InvokeAsync(() =>
-        {
-            var url = "https://github.com/stil/efmig";
-
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
-            }
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-            {
-                Process.Start("open", url);
-            }
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
-                Process.Start("xdg-open", url);
-            }
-        });
+        Dispatcher.UIThread.InvokeAsync(() => { LinkOpener.Open("https://github.com/stil/efmig"); });
     }
 }

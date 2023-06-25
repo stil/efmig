@@ -47,21 +47,25 @@
                 <TextBox Grid.Row="0" Grid.Column="1" Margin="0 4" Text="{Binding ProfileName}"
                          Watermark="MyConnection1" />
 
-                <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="0 0 12 0">dotnet-ef version</TextBlock>
+                <SelectableTextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="0 0 12 0">
+                    dotnet-ef version —
+                    <TextBlock TextDecorations="Underline" Cursor="Hand" PointerPressed="DotnetEfNugetLink_OnPointerPressed">NuGet Page</TextBlock>
+                </SelectableTextBlock>
                 <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding DotnetEfVersionSelected}" Margin="0 4"
-                          HorizontalAlignment="Stretch" />
+                         HorizontalAlignment="Stretch" />
 
-                <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="0 0 12 0"
-                           TextWrapping="Wrap">
-                    Microsoft.EntityFrameworkCore.Design version
-                </TextBlock>
+                <SelectableTextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="0 0 12 0"
+                                     TextWrapping="Wrap">
+                    Microsoft.EntityFrameworkCore.Design version —
+                    <TextBlock TextDecorations="Underline" Cursor="Hand" PointerPressed="MsEfCoreDesignNugetLink_OnPointerPressed">NuGet Page</TextBlock>
+                </SelectableTextBlock>
                 <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding EfCoreDesignVersionSelected}"
                          Margin="0 4" HorizontalAlignment="Stretch" />
 
                 <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="0 0 12 0">Target framework version</TextBlock>
                 <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding RuntimeVersionSelected}" Margin="0 4"
                          HorizontalAlignment="Stretch" />
-                
+
                 <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="0 0 12 0">Migrations directory</TextBlock>
                 <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding MigrationsDir}" Margin="0 4"
                          HorizontalAlignment="Stretch" Watermark="Migrations" />
