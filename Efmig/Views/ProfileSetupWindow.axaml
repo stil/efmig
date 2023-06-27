@@ -49,7 +49,7 @@
 
                 <SelectableTextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="0 0 12 0">
                     dotnet-ef version —
-                    <TextBlock TextDecorations="Underline" Cursor="Hand" PointerPressed="DotnetEfNugetLink_OnPointerPressed">NuGet Page</TextBlock>
+                    <TextBlock FontWeight="SemiBold" Cursor="Hand" PointerPressed="DotnetEfNugetLink_OnPointerPressed">NuGet<PathIcon Margin="6 1 0 0" Height="12" Width="12" Data="{StaticResource OpenRegular}"></PathIcon></TextBlock>
                 </SelectableTextBlock>
                 <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding DotnetEfVersionSelected}" Margin="0 4"
                          HorizontalAlignment="Stretch" />
@@ -57,7 +57,7 @@
                 <SelectableTextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="0 0 12 0"
                                      TextWrapping="Wrap">
                     Microsoft.EntityFrameworkCore.Design version —
-                    <TextBlock TextDecorations="Underline" Cursor="Hand" PointerPressed="MsEfCoreDesignNugetLink_OnPointerPressed">NuGet Page</TextBlock>
+                    <TextBlock FontWeight="SemiBold"  Cursor="Hand" PointerPressed="MsEfCoreDesignNugetLink_OnPointerPressed">NuGet<PathIcon Margin="6 1 0 0" Height="12" Width="12" Data="{StaticResource OpenRegular}"></PathIcon></TextBlock>
                 </SelectableTextBlock>
                 <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding EfCoreDesignVersionSelected}"
                          Margin="0 4" HorizontalAlignment="Stretch" />
