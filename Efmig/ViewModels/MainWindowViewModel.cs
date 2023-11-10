@@ -1,5 +1,7 @@
 ﻿using System.Collections.ObjectModel;
+using System.Reactive;
 using System.Windows.Input;
+using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
 namespace Efmig.ViewModels;
@@ -16,4 +18,5 @@ public class MainWindowViewModel : ViewModelBase
     [Reactive] public ICommand ListMigrations { get; set; }
     [Reactive] public ICommand RemoveLastMigration { get; set; }
     [Reactive] public ICommand GenerateMigrationScript { get; set; }
+    [Reactive] public ICommand Optimize { get; set; }
 }

@@ -67,6 +67,12 @@
                         Command="{Binding GenerateMigrationScript}">
                     Generate migration script
                 </Button>
+                
+                <Button Margin="4" HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center"
+                        Command="{Binding Optimize}">
+                    Generate optimized model
+                </Button>
             </StackPanel>
 
             <StackPanel Grid.Column="0" Grid.Row="2" VerticalAlignment="Bottom">

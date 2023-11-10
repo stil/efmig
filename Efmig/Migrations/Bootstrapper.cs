@@ -154,6 +154,16 @@ public class Bootstrapper
             await action.ExecuteAsync(context);
         }, profileSelected);
 
+        mainWindowViewModel.Optimize = ReactiveCommand.CreateFromTask(async () =>
+        {
+            var selectedProfile = configurationProfiles.First(p =>
+                p.Name == mainWindowViewModel.SelectedConfigurationProfile);
+
+            var context = new ActionContext(mainWindow.LogViewer, mainWindow.LogScrollViewer, selectedProfile);
+            var action = new OptimizeAction();
+            await action.ExecuteAsync(context);
+        }, profileSelected);
+        
         mainWindowViewModel.RemoveLastMigration = ReactiveCommand.CreateFromTask(async () =>
         {
             var selectedProfile = configurationProfiles.First(p =>
