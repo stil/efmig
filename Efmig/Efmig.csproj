@@ -28,7 +28,7 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="NLog" Version="5.2.5" />
+        <PackageReference Include="NLog" Version="5.2.7" />
         <PackageReference Include="ReactiveUI.Fody" Version="19.5.1" />
     </ItemGroup>
 
