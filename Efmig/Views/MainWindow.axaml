@@ -21,6 +21,17 @@
         <vm:MainWindowViewModel />
     </Design.DataContext>
 
+    <Window.Styles>
+        <Style Selector="Button.action">
+            <Setter Property="Margin" Value="0 4" />
+            <Setter Property="Height" Value="32" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="Padding" Value="0 2 0 0" />
+        </Style>
+    </Window.Styles>
+
     <Panel>
         <ExperimentalAcrylicBorder IsHitTestVisible="False">
             <ExperimentalAcrylicBorder.Material>
@@ -36,55 +47,45 @@
             <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="1" Margin="12 0 12 12"
                         HorizontalAlignment="Stretch">
 
-                <TextBlock VerticalAlignment="Center" Margin="4 0 12 0">Create migration</TextBlock>
+                <TextBlock VerticalAlignment="Center" Margin="4 0 0 0">Create migration</TextBlock>
 
-                <Grid ColumnDefinitions="*,Auto">
-                    <TextBox Grid.Column="0" Margin="4" Watermark="New migration name"
-                             HorizontalAlignment="Stretch"
+                <Grid ColumnDefinitions="*,Auto" Margin="0 4">
+                    <TextBox Grid.Column="0" Margin="0 0 8 0" Watermark="New migration name"
+                             HorizontalAlignment="Stretch" VerticalContentAlignment="Center"
                              Text="{Binding NewMigrationName}" />
                     <Button
-                        Grid.Column="1" Margin="4" HorizontalAlignment="Stretch"
+                        Grid.Column="1" HorizontalAlignment="Stretch"
                         HorizontalContentAlignment="Center"
                         Command="{Binding CreateMigration}">
                         <PathIcon Data="{StaticResource AddSquareRegular}"></PathIcon>
                     </Button>
                 </Grid>
 
-                <TextBlock VerticalAlignment="Center" Margin="4 16 12 0">General actions</TextBlock>
+                <TextBlock VerticalAlignment="Center" Margin="4 20 0 0">General actions</TextBlock>
 
-                <Button Margin="4" VerticalAlignment="Top" HorizontalAlignment="Stretch"
-                        HorizontalContentAlignment="Center" Command="{Binding ListMigrations}">
+                <Button Classes="action" Command="{Binding ListMigrations}">
                     List migrations
                 </Button>
 
-                <Button Margin="4" HorizontalAlignment="Stretch"
-                        HorizontalContentAlignment="Center"
-                        Command="{Binding GenerateMigrationScript}">
+                <Button Classes="action" Command="{Binding GenerateMigrationScript}">
                     Generate full migration script
                 </Button>
                 
-                
-                <Button Margin="4" HorizontalAlignment="Stretch"
-                        HorizontalContentAlignment="Center"
-                        Command="{Binding Optimize}">
+                <Button Classes="action" Command="{Binding Optimize}">
                     Generate optimized model
                 </Button>
-                
-                
-                <TextBlock VerticalAlignment="Center" Margin="4 16 12 0">Last migration actions</TextBlock>
-                
-                <Button Margin="4" VerticalAlignment="Top" HorizontalAlignment="Stretch"
-                        HorizontalContentAlignment="Center" Command="{Binding RemoveLastMigration}">
+
+                <TextBlock VerticalAlignment="Center" Margin="4 16 0 0">Last migration actions</TextBlock>
+
+                <Button Classes="action" Command="{Binding RemoveLastMigration}">
                     Remove from code
                 </Button>
-                
-                <Button Margin="4" VerticalAlignment="Top" HorizontalAlignment="Stretch"
-                        HorizontalContentAlignment="Center" Command="{Binding GenerateApplyScriptForLastMigration}">
+
+                <Button Classes="action" Command="{Binding GenerateApplyScriptForLastMigration}">
                     Generate apply script
                 </Button>
-                
-                <Button Margin="4" VerticalAlignment="Top" HorizontalAlignment="Stretch"
-                        HorizontalContentAlignment="Center" Command="{Binding GenerateRollbackScriptForLastMigration}">
+
+                <Button Classes="action" Command="{Binding GenerateRollbackScriptForLastMigration}">
                     Generate rollback script
                 </Button>
             </StackPanel>
