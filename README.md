@@ -49,9 +49,15 @@ optionsBuilder.UseMySql(connectionString, serverVersion);
 ## Usage
 You can invoke one of the following actions:
 - Create a new migration. Specify its name beforehand and click `[+]` button on the right.
-- List migrations. This action does nothing but lists already existing migrations.
-- Remove most recent migration. This action removes most recent migration from **the code**. Nothing will happen on the actual database.
-- Generate migration script. This action opens default text editor with SQL code of all migrations for you to review.
+- General actions:
+  - List migrations. This action does nothing but lists already existing migrations.
+  - Generate migration script. This action opens default text editor with SQL code of all migrations for you to review.
+  - Generate optimized model.
+- Last migration actions:
+  - Remove from code. This action removes most recent migration from **the code**. Nothing will happen on the actual database. Will fail if the migration is already applied on database - in that case, use "Generate rollback script" action first.
+  - Generate apply script. This actions generates SQL script of last migration for you to review and manually apply.
+  - Generate rollback script. This action generates SQL script that rolls back last migration for you to review and manually apply.
+
 
 ## Other screenshots
 
