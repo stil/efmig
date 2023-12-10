@@ -1,3 +1,5 @@
+const targetFramework = "net8.0";
+
 const platformTemplateGen = (name: string, rid: string, platform: string) =>
   `
       # Build ${name}
@@ -6,13 +8,13 @@ const platformTemplateGen = (name: string, rid: string, platform: string) =>
         run: dotnet publish --configuration Release --self-contained -p:PublishSingleFile=true -r ${rid}
       #- name: ZIP ${name}
       #  if: matrix.platform == '${platform}'
-      #  run: 7z a -tzip artifacts/efmig-${name}-Release.zip ./Efmig/bin/Release/net7.0/${rid}/publish/*
+      #  run: 7z a -tzip artifacts/efmig-${name}-Release.zip ./Efmig/bin/Release/${targetFramework}/${rid}/publish/*
       - name: Upload ${name} artifacts
         if: matrix.platform == '${platform}'
         uses: actions/upload-artifact@v3
         with:
           name: efmig-${name}-Release
-          path: Efmig/bin/Release/net7.0/${rid}/publish/
+          path: Efmig/bin/Release/${targetFramework}/${rid}/publish/
           if-no-files-found: error
           `;
 
@@ -48,7 +50,7 @@ jobs:
       - name: Setup .NET Core SDK \${{ matrix.dotnet-version }}
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: 7.0.x
+          dotnet-version: 8.0.x
 
       ${extraSteps}
 `.trim();

@@ -20,7 +20,7 @@ jobs:
       - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: 7.0.x
+          dotnet-version: 8.0.x
 
       
       # Build win-x64
@@ -29,13 +29,13 @@ jobs:
         run: dotnet publish --configuration Release --self-contained -p:PublishSingleFile=true -r win10-x64
       #- name: ZIP win-x64
       #  if: matrix.platform == 'windows-latest'
-      #  run: 7z a -tzip artifacts/efmig-win-x64-Release.zip ./Efmig/bin/Release/net7.0/win10-x64/publish/*
+      #  run: 7z a -tzip artifacts/efmig-win-x64-Release.zip ./Efmig/bin/Release/net8.0/win10-x64/publish/*
       - name: Upload win-x64 artifacts
         if: matrix.platform == 'windows-latest'
         uses: actions/upload-artifact@v3
         with:
           name: efmig-win-x64-Release
-          path: Efmig/bin/Release/net7.0/win10-x64/publish/
+          path: Efmig/bin/Release/net8.0/win10-x64/publish/
           if-no-files-found: error
           
       # Build win-arm64
@@ -44,13 +44,13 @@ jobs:
         run: dotnet publish --configuration Release --self-contained -p:PublishSingleFile=true -r win10-arm64
       #- name: ZIP win-arm64
       #  if: matrix.platform == 'windows-latest'
-      #  run: 7z a -tzip artifacts/efmig-win-arm64-Release.zip ./Efmig/bin/Release/net7.0/win10-arm64/publish/*
+      #  run: 7z a -tzip artifacts/efmig-win-arm64-Release.zip ./Efmig/bin/Release/net8.0/win10-arm64/publish/*
       - name: Upload win-arm64 artifacts
         if: matrix.platform == 'windows-latest'
         uses: actions/upload-artifact@v3
         with:
           name: efmig-win-arm64-Release
-          path: Efmig/bin/Release/net7.0/win10-arm64/publish/
+          path: Efmig/bin/Release/net8.0/win10-arm64/publish/
           if-no-files-found: error
           
       # Build linux-x64
@@ -59,13 +59,13 @@ jobs:
         run: dotnet publish --configuration Release --self-contained -p:PublishSingleFile=true -r linux-x64
       #- name: ZIP linux-x64
       #  if: matrix.platform == 'ubuntu-latest'
-      #  run: 7z a -tzip artifacts/efmig-linux-x64-Release.zip ./Efmig/bin/Release/net7.0/linux-x64/publish/*
+      #  run: 7z a -tzip artifacts/efmig-linux-x64-Release.zip ./Efmig/bin/Release/net8.0/linux-x64/publish/*
       - name: Upload linux-x64 artifacts
         if: matrix.platform == 'ubuntu-latest'
         uses: actions/upload-artifact@v3
         with:
           name: efmig-linux-x64-Release
-          path: Efmig/bin/Release/net7.0/linux-x64/publish/
+          path: Efmig/bin/Release/net8.0/linux-x64/publish/
           if-no-files-found: error
           
       # Build linux-arm64
@@ -74,13 +74,13 @@ jobs:
         run: dotnet publish --configuration Release --self-contained -p:PublishSingleFile=true -r linux-arm64
       #- name: ZIP linux-arm64
       #  if: matrix.platform == 'ubuntu-latest'
-      #  run: 7z a -tzip artifacts/efmig-linux-arm64-Release.zip ./Efmig/bin/Release/net7.0/linux-arm64/publish/*
+      #  run: 7z a -tzip artifacts/efmig-linux-arm64-Release.zip ./Efmig/bin/Release/net8.0/linux-arm64/publish/*
       - name: Upload linux-arm64 artifacts
         if: matrix.platform == 'ubuntu-latest'
         uses: actions/upload-artifact@v3
         with:
           name: efmig-linux-arm64-Release
-          path: Efmig/bin/Release/net7.0/linux-arm64/publish/
+          path: Efmig/bin/Release/net8.0/linux-arm64/publish/
           if-no-files-found: error
           
       # Build osx-x64
@@ -89,13 +89,13 @@ jobs:
         run: dotnet publish --configuration Release --self-contained -p:PublishSingleFile=true -r osx-x64
       #- name: ZIP osx-x64
       #  if: matrix.platform == 'macos-latest'
-      #  run: 7z a -tzip artifacts/efmig-osx-x64-Release.zip ./Efmig/bin/Release/net7.0/osx-x64/publish/*
+      #  run: 7z a -tzip artifacts/efmig-osx-x64-Release.zip ./Efmig/bin/Release/net8.0/osx-x64/publish/*
       - name: Upload osx-x64 artifacts
         if: matrix.platform == 'macos-latest'
         uses: actions/upload-artifact@v3
         with:
           name: efmig-osx-x64-Release
-          path: Efmig/bin/Release/net7.0/osx-x64/publish/
+          path: Efmig/bin/Release/net8.0/osx-x64/publish/
           if-no-files-found: error
           
       # Build osx-arm64
@@ -104,11 +104,11 @@ jobs:
         run: dotnet publish --configuration Release --self-contained -p:PublishSingleFile=true -r osx.11.0-arm64
       #- name: ZIP osx-arm64
       #  if: matrix.platform == 'macos-latest'
-      #  run: 7z a -tzip artifacts/efmig-osx-arm64-Release.zip ./Efmig/bin/Release/net7.0/osx.11.0-arm64/publish/*
+      #  run: 7z a -tzip artifacts/efmig-osx-arm64-Release.zip ./Efmig/bin/Release/net8.0/osx.11.0-arm64/publish/*
       - name: Upload osx-arm64 artifacts
         if: matrix.platform == 'macos-latest'
         uses: actions/upload-artifact@v3
         with:
           name: efmig-osx-arm64-Release
-          path: Efmig/bin/Release/net7.0/osx.11.0-arm64/publish/
+          path: Efmig/bin/Release/net8.0/osx.11.0-arm64/publish/
           if-no-files-found: error
