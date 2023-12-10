@@ -36,7 +36,7 @@
             <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="1" Margin="12 0 12 12"
                         HorizontalAlignment="Stretch">
 
-                <TextBlock VerticalAlignment="Center" Margin="0 0 12 0">Create migration</TextBlock>
+                <TextBlock VerticalAlignment="Center" Margin="4 0 12 0">Create migration</TextBlock>
 
                 <Grid ColumnDefinitions="*,Auto">
                     <TextBox Grid.Column="0" Margin="4" Watermark="New migration name"
@@ -50,28 +50,42 @@
                     </Button>
                 </Grid>
 
-                <TextBlock VerticalAlignment="Center" Margin="0 16 12 0">Actions</TextBlock>
+                <TextBlock VerticalAlignment="Center" Margin="4 16 12 0">General actions</TextBlock>
 
                 <Button Margin="4" VerticalAlignment="Top" HorizontalAlignment="Stretch"
                         HorizontalContentAlignment="Center" Command="{Binding ListMigrations}">
                     List migrations
                 </Button>
 
-                <Button Margin="4" VerticalAlignment="Top" HorizontalAlignment="Stretch"
-                        HorizontalContentAlignment="Center" Command="{Binding RemoveLastMigration}">
-                    Remove most recent migration
-                </Button>
-
                 <Button Margin="4" HorizontalAlignment="Stretch"
                         HorizontalContentAlignment="Center"
                         Command="{Binding GenerateMigrationScript}">
-                    Generate migration script
+                    Generate full migration script
                 </Button>
+                
                 
                 <Button Margin="4" HorizontalAlignment="Stretch"
                         HorizontalContentAlignment="Center"
                         Command="{Binding Optimize}">
                     Generate optimized model
+                </Button>
+                
+                
+                <TextBlock VerticalAlignment="Center" Margin="4 16 12 0">Last migration actions</TextBlock>
+                
+                <Button Margin="4" VerticalAlignment="Top" HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center" Command="{Binding RemoveLastMigration}">
+                    Remove from code
+                </Button>
+                
+                <Button Margin="4" VerticalAlignment="Top" HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center" Command="{Binding GenerateApplyScriptForLastMigration}">
+                    Generate apply script
+                </Button>
+                
+                <Button Margin="4" VerticalAlignment="Top" HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center" Command="{Binding GenerateRollbackScriptForLastMigration}">
+                    Generate rollback script
                 </Button>
             </StackPanel>
 

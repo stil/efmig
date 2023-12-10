@@ -173,15 +173,35 @@ public class Bootstrapper
             var action = new RemoveLastMigrationAction();
             await action.ExecuteAsync(context);
         }, profileSelected);
-
-        mainWindowViewModel.GenerateMigrationScript = ReactiveCommand.CreateFromTask(async () =>
+        
+        mainWindowViewModel.GenerateApplyScriptForLastMigration = ReactiveCommand.CreateFromTask(() =>
         {
             var selectedProfile = configurationProfiles.First(p =>
                 p.Name == mainWindowViewModel.SelectedConfigurationProfile);
 
             var context = new ActionContext(mainWindow.LogViewer, mainWindow.LogScrollViewer, selectedProfile);
-            var action = new GenerateMigrationScriptAction();
-            await action.ExecuteAsync(context);
+            var action = new GenerateMigrationScriptAction(new IApplyLastMigrationScriptMode());
+            return action.ExecuteAsync(context);
+        }, profileSelected);
+        
+        mainWindowViewModel.GenerateRollbackScriptForLastMigration = ReactiveCommand.CreateFromTask(() =>
+        {
+            var selectedProfile = configurationProfiles.First(p =>
+                p.Name == mainWindowViewModel.SelectedConfigurationProfile);
+
+            var context = new ActionContext(mainWindow.LogViewer, mainWindow.LogScrollViewer, selectedProfile);
+            var action = new GenerateMigrationScriptAction(new IRollbackLastMigrationScriptMode());
+            return action.ExecuteAsync(context);
+        }, profileSelected);
+
+        mainWindowViewModel.GenerateMigrationScript = ReactiveCommand.CreateFromTask(() =>
+        {
+            var selectedProfile = configurationProfiles.First(p =>
+                p.Name == mainWindowViewModel.SelectedConfigurationProfile);
+
+            var context = new ActionContext(mainWindow.LogViewer, mainWindow.LogScrollViewer, selectedProfile);
+            var action = new GenerateMigrationScriptAction(new IFullMigrationScriptMode());
+            return action.ExecuteAsync(context);
         }, profileSelected);
 
         var profileSelectedAndEnteredMigrationName = mainWindowViewModel.WhenAnyValue(

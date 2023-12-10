@@ -17,6 +17,8 @@ public class MainWindowViewModel : ViewModelBase
     [Reactive] public ICommand CreateMigration { get; set; }
     [Reactive] public ICommand ListMigrations { get; set; }
     [Reactive] public ICommand RemoveLastMigration { get; set; }
+    [Reactive] public ICommand GenerateApplyScriptForLastMigration { get; set; }
+    [Reactive] public ICommand GenerateRollbackScriptForLastMigration { get; set; }
     [Reactive] public ICommand GenerateMigrationScript { get; set; }
     [Reactive] public ICommand Optimize { get; set; }
 }
