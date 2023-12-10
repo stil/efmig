@@ -44,9 +44,9 @@ public class Bootstrapper
         {
             setupViewModel.WindowTitle = existingProfile != null ? "Edit profile" : "Create new profile";
             setupViewModel.ProfileName = existingProfile?.Name ?? "";
-            setupViewModel.DotnetEfVersionSelected = existingProfile?.DotnetEfVersion ?? "7.0.3";
-            setupViewModel.EfCoreDesignVersionSelected = existingProfile?.EfCoreDesignVersion ?? "7.0.3";
-            setupViewModel.RuntimeVersionSelected = existingProfile?.RuntimeVersion ?? "net7.0";
+            setupViewModel.DotnetEfVersionSelected = existingProfile?.DotnetEfVersion ?? "8.0.0";
+            setupViewModel.EfCoreDesignVersionSelected = existingProfile?.EfCoreDesignVersion ?? "8.0.0";
+            setupViewModel.RuntimeVersionSelected = existingProfile?.RuntimeVersion ?? "net8.0";
             setupViewModel.DbContextCsprojPath = existingProfile?.DbContextCsprojPath ?? "";
             setupViewModel.DbContextFullName = existingProfile?.DbContextFullName ?? "";
             setupViewModel.DbContextConfigCode =
