@@ -24,7 +24,7 @@ const extraSteps = [
   platformTemplateGen("linux-x64", "linux-x64", "ubuntu-latest"),
   platformTemplateGen("linux-arm64", "linux-arm64", "ubuntu-latest"),
   platformTemplateGen("osx-x64", "osx-x64", "macos-latest"),
-  platformTemplateGen("osx-arm64", "osx.11.0-arm64", "macos-latest"),
+  platformTemplateGen("osx-arm64", "osx-arm64", "macos-latest"),
 ].join("");
 
 const template = `
