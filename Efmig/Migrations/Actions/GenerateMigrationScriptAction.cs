@@ -22,24 +22,32 @@ public class GenerateMigrationScriptAction(IMigrationScriptMode migrationScriptM
     public async Task ExecuteAsync(ActionContext ctx)
     {
         List<MigrationJsonModel> migrations = null;
-        if (migrationScriptMode is IApplyLastMigrationScriptMode ||
-            migrationScriptMode is IRollbackLastMigrationScriptMode)
+        try
         {
-            var migrationsJson = new StringBuilder();
-
-            await CommonActionHelper.RunDotnetEfTool(ctx, new CommonActionOptions
+            if (migrationScriptMode is IApplyLastMigrationScriptMode ||
+                migrationScriptMode is IRollbackLastMigrationScriptMode)
             {
-                ActionName = "detect migrations",
-                DataCallback = line => { migrationsJson.AppendLine(line); },
-                DotnetEfArgs = new[]
-                {
-                    "migrations",
-                    "list",
-                    "--json"
-                }
-            });
+                var migrationsJson = new StringBuilder();
 
-            migrations = JsonSerializer.Deserialize<List<MigrationJsonModel>>(migrationsJson.ToString());
+                await CommonActionHelper.RunDotnetEfTool(ctx, new CommonActionOptions
+                {
+                    ActionName = "detect migrations",
+                    DataCallback = line => { migrationsJson.AppendLine(line); },
+                    DotnetEfArgs = new[]
+                    {
+                        "migrations",
+                        "list",
+                        "--json"
+                    }
+                });
+
+                migrations = JsonSerializer.Deserialize<List<MigrationJsonModel>>(migrationsJson.ToString());
+            }
+        }
+        catch (Exception e)
+        {
+            ctx.LogError(e.ToString());
+            throw;
         }
 
 
@@ -95,5 +103,5 @@ public class MigrationJsonModel
     public string id { get; set; }
     public string name { get; set; }
     public string safeName { get; set; }
-    public bool applied { get; set; }
+    public bool? applied { get; set; }
 }
