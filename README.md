@@ -1,6 +1,6 @@
 # efmig
 
-This is a multi-platform GUI application that greatly speeds up development when using Entity Framework Core.
+This is a multi-platform (Windows, macOS, Linux) GUI application that makes working with Entity Framework Core migrations easier.
 
 [![build](https://github.com/stil/efmig/actions/workflows/build.yml/badge.svg)](https://github.com/stil/efmig/actions/workflows/build.yml)
 
