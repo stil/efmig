@@ -20,5 +20,6 @@ public class MainWindowViewModel : ViewModelBase
     [Reactive] public ICommand GenerateApplyScriptForLastMigration { get; set; }
     [Reactive] public ICommand GenerateRollbackScriptForLastMigration { get; set; }
     [Reactive] public ICommand GenerateMigrationScript { get; set; }
+    [Reactive] public ICommand GenerateUnappliedMigrationScript { get; set; }
     [Reactive] public ICommand Optimize { get; set; }
 }

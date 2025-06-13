@@ -43,7 +43,7 @@
             </ExperimentalAcrylicBorder.Material>
         </ExperimentalAcrylicBorder>
 
-        <Grid ColumnDefinitions="250,*" RowDefinitions="Auto,Auto,*">
+        <Grid ColumnDefinitions="260,*" RowDefinitions="Auto,Auto,*">
             <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="1" Margin="12 0 12 12"
                         HorizontalAlignment="Stretch">
 
@@ -69,6 +69,10 @@
 
                 <Button Classes="action" Command="{Binding GenerateMigrationScript}">
                     Generate full migration script
+                </Button>
+
+                <Button Classes="action" Command="{Binding GenerateUnappliedMigrationScript}">
+                    Generate unapplied migration script
                 </Button>
                 
                 <Button Classes="action" Command="{Binding Optimize}">

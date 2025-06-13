@@ -204,6 +204,16 @@ public class Bootstrapper
             return action.ExecuteAsync(context);
         }, profileSelected);
 
+        mainWindowViewModel.GenerateUnappliedMigrationScript = ReactiveCommand.CreateFromTask(() =>
+        {
+            var selectedProfile = configurationProfiles.First(p =>
+                p.Name == mainWindowViewModel.SelectedConfigurationProfile);
+
+            var context = new ActionContext(mainWindow.LogViewer, mainWindow.LogScrollViewer, selectedProfile);
+            var action = new GenerateMigrationScriptAction(new IUnappliedScriptMode());
+            return action.ExecuteAsync(context);
+        }, profileSelected);
+
         var profileSelectedAndEnteredMigrationName = mainWindowViewModel.WhenAnyValue(
             vm => vm.SelectedConfigurationProfile, vm => vm.NewMigrationName,
             (profile, newMigrationName) => profile != null && !string.IsNullOrWhiteSpace(newMigrationName));

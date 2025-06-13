@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
@@ -12,6 +13,8 @@ namespace Efmig.Migrations.Actions;
 public interface IMigrationScriptMode;
 
 public class IFullMigrationScriptMode : IMigrationScriptMode;
+
+public class IUnappliedScriptMode : IMigrationScriptMode;
 
 public class IApplyLastMigrationScriptMode : IMigrationScriptMode;
 
@@ -25,7 +28,8 @@ public class GenerateMigrationScriptAction(IMigrationScriptMode migrationScriptM
         try
         {
             if (migrationScriptMode is IApplyLastMigrationScriptMode ||
-                migrationScriptMode is IRollbackLastMigrationScriptMode)
+                migrationScriptMode is IRollbackLastMigrationScriptMode ||
+                migrationScriptMode is IUnappliedScriptMode)
             {
                 var migrationsJson = new StringBuilder();
 
@@ -50,15 +54,13 @@ public class GenerateMigrationScriptAction(IMigrationScriptMode migrationScriptM
             throw;
         }
 
-
-        var stringBuilder = new StringBuilder();
-
         var dotnetEfArgs = new List<string>
         {
             "migrations",
             "script"
         };
 
+        var hasMatchingMigrations = true;
         if (migrationScriptMode is IApplyLastMigrationScriptMode)
         {
             dotnetEfArgs.Add(migrations[^2].name);
@@ -69,13 +71,37 @@ public class GenerateMigrationScriptAction(IMigrationScriptMode migrationScriptM
             dotnetEfArgs.Add(migrations[^1].name);
             dotnetEfArgs.Add(migrations[^2].name);
         }
-
-        await CommonActionHelper.RunDotnetEfTool(ctx, new CommonActionOptions
+        else if (migrationScriptMode is IUnappliedScriptMode)
         {
-            ActionName = "remove last migration",
-            DataCallback = line => { stringBuilder.AppendLine(line); },
-            DotnetEfArgs = dotnetEfArgs.ToArray()
-        });
+            var lastApplied = migrations
+                .TakeWhile(m => m.applied == true)
+                .Last();
+
+            if (lastApplied != null)
+            {
+                dotnetEfArgs.Add(lastApplied.name);
+            }
+            else
+            {
+                hasMatchingMigrations = false;
+            }
+        }
+
+        var stringBuilder = new StringBuilder();
+
+        if (hasMatchingMigrations)
+        {
+            await CommonActionHelper.RunDotnetEfTool(ctx, new CommonActionOptions
+            {
+                ActionName = "generate migration script",
+                DataCallback = line => { stringBuilder.AppendLine(line); },
+                DotnetEfArgs = dotnetEfArgs.ToArray()
+            });
+        }
+        else
+        {
+            stringBuilder.AppendLine("-- No matching migrations.");
+        }
 
         var fileName = "efmig-script-" + DateTimeOffset.Now.ToUnixTimeSeconds() + ".txt";
         await File.WriteAllTextAsync(fileName, stringBuilder.ToString());
