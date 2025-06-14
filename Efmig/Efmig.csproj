@@ -37,4 +37,8 @@
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
     </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Efmig.Core\Efmig.Core.csproj" />
+    </ItemGroup>
 </Project>

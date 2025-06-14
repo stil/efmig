@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
-namespace Efmig.Migrations.Actions;
+namespace Efmig.Core.Actions;
 
 public interface IMigrationScriptMode;
 
@@ -24,7 +18,7 @@ public class GenerateMigrationScriptAction(IMigrationScriptMode migrationScriptM
 {
     public async Task ExecuteAsync(ActionContext ctx)
     {
-        List<MigrationJsonModel> migrations = null;
+        List<MigrationJsonModel>? migrations = null;
         try
         {
             if (migrationScriptMode is IApplyLastMigrationScriptMode ||
@@ -50,7 +44,7 @@ public class GenerateMigrationScriptAction(IMigrationScriptMode migrationScriptM
         }
         catch (Exception e)
         {
-            ctx.LogError(e.ToString());
+            ctx.LogOutput.LogError(e.ToString());
             throw;
         }
 
@@ -61,31 +55,69 @@ public class GenerateMigrationScriptAction(IMigrationScriptMode migrationScriptM
         };
 
         var hasMatchingMigrations = true;
+        const string beforeTheFirstMigration = "0";
+
         if (migrationScriptMode is IApplyLastMigrationScriptMode)
         {
-            dotnetEfArgs.Add(migrations[^2].name);
-            dotnetEfArgs.Add(migrations[^1].name);
-        }
-        else if (migrationScriptMode is IRollbackLastMigrationScriptMode)
-        {
-            dotnetEfArgs.Add(migrations[^1].name);
-            dotnetEfArgs.Add(migrations[^2].name);
-        }
-        else if (migrationScriptMode is IUnappliedScriptMode)
-        {
-            var lastApplied = migrations
-                .TakeWhile(m => m.applied == true)
-                .Last();
-
-            if (lastApplied != null)
+            if (migrations == null)
             {
-                dotnetEfArgs.Add(lastApplied.name);
+                throw new Exception("Migration list was not initialized.");
+            }
+
+            if (migrations.Count > 0)
+            {
+                dotnetEfArgs.Add(migrations.Count == 1 ? beforeTheFirstMigration : migrations[^2].name);
+                dotnetEfArgs.Add(migrations[^1].name);
             }
             else
             {
                 hasMatchingMigrations = false;
             }
         }
+        else if (migrationScriptMode is IRollbackLastMigrationScriptMode)
+        {
+            if (migrations == null)
+            {
+                throw new Exception("Migration list was not initialized.");
+            }
+
+            if (migrations.Count > 0)
+            {
+                dotnetEfArgs.Add(migrations[^1].name);
+                dotnetEfArgs.Add(migrations.Count == 1 ? beforeTheFirstMigration : migrations[^2].name);
+            }
+        }
+        else if (migrationScriptMode is IUnappliedScriptMode)
+        {
+            if (migrations == null)
+            {
+                throw new Exception("Migration list was not initialized.");
+            }
+
+            if (migrations.Count > 0)
+            {
+                var firstUnappliedIndex = migrations.FindIndex(m => m.applied == false);
+
+                if (firstUnappliedIndex == -1)
+                {
+                    // No unapplied migrations found.
+                    hasMatchingMigrations = false;
+                }
+                else if (firstUnappliedIndex == 0)
+                {
+                    dotnetEfArgs.Add(beforeTheFirstMigration);
+                }
+                else
+                {
+                    dotnetEfArgs.Add(migrations[firstUnappliedIndex - 1].name);
+                }
+            }
+            else
+            {
+                hasMatchingMigrations = false;
+            }
+        }
+
 
         var stringBuilder = new StringBuilder();
 
@@ -103,31 +135,14 @@ public class GenerateMigrationScriptAction(IMigrationScriptMode migrationScriptM
             stringBuilder.AppendLine("-- No matching migrations.");
         }
 
-        var fileName = "efmig-script-" + DateTimeOffset.Now.ToUnixTimeSeconds() + ".txt";
-        await File.WriteAllTextAsync(fileName, stringBuilder.ToString());
-
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-        {
-            await EditorLauncher.LaunchAsync(EditorLauncher.NotepadEditor, fileName);
-        }
-        else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-        {
-            await EditorLauncher.LaunchAsync(EditorLauncher.OpenTextEditEditorMacOS, fileName);
-        }
-        else
-        {
-            ctx.LogError("Linux is not supported.");
-        }
-
-        await Task.Delay(2000);
-        File.Delete(fileName);
+        await ctx.ScriptViewer.OpenScriptPreview(stringBuilder.ToString());
     }
 }
 
 public class MigrationJsonModel
 {
-    public string id { get; set; }
-    public string name { get; set; }
-    public string safeName { get; set; }
+    public required string id { get; set; }
+    public required string name { get; set; }
+    public required string safeName { get; set; }
     public bool? applied { get; set; }
 }

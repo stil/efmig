@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Efmig.Core;
 using NLog;
 
 namespace Efmig.Migrations;
@@ -46,16 +47,4 @@ public static class ProfilesManager
 public class ConfigurationRoot
 {
     public List<ConfigurationProfile> Profiles { get; set; }
-}
-
-public class ConfigurationProfile
-{
-    public string Name { get; set; }
-    public string DotnetEfVersion { get; set; }
-    public string EfCoreDesignVersion { get; set; }
-    public string RuntimeVersion { get; set; }
-    public string DbContextCsprojPath { get; set; }
-    public string DbContextFullName { get; set; }
-    public string DbContextConfigCode { get; set; }
-    public string MigrationsDir { get; set; }
 }

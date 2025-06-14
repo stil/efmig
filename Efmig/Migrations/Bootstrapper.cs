@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using Avalonia.Controls;
 using Avalonia.Controls.Documents;
 using Avalonia.Platform.Storage;
 using DynamicData;
-using Efmig.Migrations.Actions;
+using Efmig.Core;
+using Efmig.Core.Actions;
 using Efmig.ViewModels;
 using Efmig.Views;
 using ReactiveUI;
@@ -120,6 +118,9 @@ public class Bootstrapper
             vm => vm.SelectedConfigurationProfile, vm => vm.NewMigrationName,
             (profile, newMigrationName) => profile != null && !string.IsNullOrWhiteSpace(newMigrationName));
 
+        var logOutput = new LogOutput(mainWindow.LogViewer, mainWindow.LogScrollViewer);
+        var scriptViewer = new ScriptViewer();
+
         mainWindowViewModel.EditProfile = ReactiveCommand.CreateFromTask(async () =>
         {
             var setupWindow = new ProfileSetupWindow();
@@ -153,7 +154,7 @@ public class Bootstrapper
             var selectedProfile = configurationProfiles.First(p =>
                 p.Name == mainWindowViewModel.SelectedConfigurationProfile);
 
-            var context = new ActionContext(mainWindow.LogViewer, mainWindow.LogScrollViewer, selectedProfile);
+            var context = new ActionContext(logOutput, scriptViewer, selectedProfile);
             var action = new ListMigrationsAction();
             await action.ExecuteAsync(context);
         }, profileSelected);
@@ -163,64 +164,64 @@ public class Bootstrapper
             var selectedProfile = configurationProfiles.First(p =>
                 p.Name == mainWindowViewModel.SelectedConfigurationProfile);
 
-            var context = new ActionContext(mainWindow.LogViewer, mainWindow.LogScrollViewer, selectedProfile);
-            context.ClearLog();
+            var context = new ActionContext(logOutput, scriptViewer, selectedProfile);
+            context.LogOutput.ClearLog();
 
             var action = new OptimizeAction();
             await action.ExecuteAsync(context);
         }, profileSelected);
-        
+
         mainWindowViewModel.RemoveLastMigration = ReactiveCommand.CreateFromTask(async () =>
         {
             var selectedProfile = configurationProfiles.First(p =>
                 p.Name == mainWindowViewModel.SelectedConfigurationProfile);
 
-            var context = new ActionContext(mainWindow.LogViewer, mainWindow.LogScrollViewer, selectedProfile);
-            context.ClearLog();
+            var context = new ActionContext(logOutput, scriptViewer, selectedProfile);
+            context.LogOutput.ClearLog();
 
             var action = new RemoveLastMigrationAction();
             await action.ExecuteAsync(context);
         }, profileSelected);
-        
+
         mainWindowViewModel.RecreateLastAndGenerateScript = ReactiveCommand.CreateFromTask(async () =>
         {
             var selectedProfile = configurationProfiles.First(p =>
                 p.Name == mainWindowViewModel.SelectedConfigurationProfile);
 
-            var context = new ActionContext(mainWindow.LogViewer, mainWindow.LogScrollViewer, selectedProfile);
-            context.ClearLog();
+            var context = new ActionContext(logOutput, scriptViewer, selectedProfile);
+            context.LogOutput.ClearLog();
 
             var action1 = new RemoveLastMigrationAction();
             await action1.ExecuteAsync(context);
-            
+
             context.Data = mainWindowViewModel.NewMigrationName;
             var action2 = new CreateMigrationAction();
             await action2.ExecuteAsync(context);
             context.Data = null;
-            
+
             var action3 = new GenerateMigrationScriptAction(new IApplyLastMigrationScriptMode());
             await action3.ExecuteAsync(context);
         }, profileSelectedAndEnteredMigrationName);
-        
+
         mainWindowViewModel.GenerateApplyScriptForLastMigration = ReactiveCommand.CreateFromTask(() =>
         {
             var selectedProfile = configurationProfiles.First(p =>
                 p.Name == mainWindowViewModel.SelectedConfigurationProfile);
 
-            var context = new ActionContext(mainWindow.LogViewer, mainWindow.LogScrollViewer, selectedProfile);
-            context.ClearLog();
+            var context = new ActionContext(logOutput, scriptViewer, selectedProfile);
+            context.LogOutput.ClearLog();
 
             var action = new GenerateMigrationScriptAction(new IApplyLastMigrationScriptMode());
             return action.ExecuteAsync(context);
         }, profileSelected);
-        
+
         mainWindowViewModel.GenerateRollbackScriptForLastMigration = ReactiveCommand.CreateFromTask(() =>
         {
             var selectedProfile = configurationProfiles.First(p =>
                 p.Name == mainWindowViewModel.SelectedConfigurationProfile);
 
-            var context = new ActionContext(mainWindow.LogViewer, mainWindow.LogScrollViewer, selectedProfile);
-            context.ClearLog();
+            var context = new ActionContext(logOutput, scriptViewer, selectedProfile);
+            context.LogOutput.ClearLog();
 
             var action = new GenerateMigrationScriptAction(new IRollbackLastMigrationScriptMode());
             return action.ExecuteAsync(context);
@@ -231,8 +232,8 @@ public class Bootstrapper
             var selectedProfile = configurationProfiles.First(p =>
                 p.Name == mainWindowViewModel.SelectedConfigurationProfile);
 
-            var context = new ActionContext(mainWindow.LogViewer, mainWindow.LogScrollViewer, selectedProfile);
-            context.ClearLog();
+            var context = new ActionContext(logOutput, scriptViewer, selectedProfile);
+            context.LogOutput.ClearLog();
 
             var action = new GenerateMigrationScriptAction(new IFullMigrationScriptMode());
             return action.ExecuteAsync(context);
@@ -243,8 +244,8 @@ public class Bootstrapper
             var selectedProfile = configurationProfiles.First(p =>
                 p.Name == mainWindowViewModel.SelectedConfigurationProfile);
 
-            var context = new ActionContext(mainWindow.LogViewer, mainWindow.LogScrollViewer, selectedProfile);
-            context.ClearLog();
+            var context = new ActionContext(logOutput, scriptViewer, selectedProfile);
+            context.LogOutput.ClearLog();
 
             var action = new GenerateMigrationScriptAction(new IUnappliedScriptMode());
             return action.ExecuteAsync(context);
@@ -255,18 +256,18 @@ public class Bootstrapper
             var selectedProfile = configurationProfiles.First(p =>
                 p.Name == mainWindowViewModel.SelectedConfigurationProfile);
 
-            var context = new ActionContext(mainWindow.LogViewer, mainWindow.LogScrollViewer, selectedProfile);
-            context.ClearLog();
+            var context = new ActionContext(logOutput, scriptViewer, selectedProfile);
+            context.LogOutput.ClearLog();
 
             context.Data = mainWindowViewModel.NewMigrationName;
             var action1 = new CreateMigrationAction();
             await action1.ExecuteAsync(context);
             context.Data = null;
-            
+
             var action2 = new GenerateMigrationScriptAction(new IApplyLastMigrationScriptMode());
             await action2.ExecuteAsync(context);
         }, profileSelectedAndEnteredMigrationName);
-        
+
         mainWindow.LogViewer.Inlines!.Add(new Run("Command result will appear here."));
 
         mainWindow.DataContext = mainWindowViewModel;

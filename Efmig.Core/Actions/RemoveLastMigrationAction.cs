@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace Efmig.Migrations.Actions;
+﻿namespace Efmig.Core.Actions;
 
 public class RemoveLastMigrationAction : IAction
 {
@@ -14,7 +12,8 @@ public class RemoveLastMigrationAction : IAction
                 "migrations",
                 "remove",
                 "--json"
-            }
+            },
+            DataCallback = null
         });
     }
 }

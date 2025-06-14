@@ -2,23 +2,20 @@
 using Avalonia.Controls.Documents;
 using Avalonia.Media;
 using Avalonia.Threading;
+using Efmig.Core.Abstractions;
 
-namespace Efmig.Migrations.Actions;
+namespace Efmig;
 
-public class ActionContext
+public class LogOutput : ILogOutput
 {
     private readonly TextBlock _logElement;
     private readonly ScrollViewer _scrollViewer;
 
-    public ActionContext(TextBlock logElement, ScrollViewer scrollViewer, ConfigurationProfile profile)
+    public LogOutput(TextBlock logElement, ScrollViewer scrollViewer)
     {
         _logElement = logElement;
         _scrollViewer = scrollViewer;
-        ConfigurationProfile = profile;
     }
-
-    public ConfigurationProfile ConfigurationProfile { get; }
-    public object Data { get; set; }
 
     public void ClearLog()
     {
@@ -30,7 +27,7 @@ public class ActionContext
         Dispatcher.UIThread.InvokeAsync(() => { _scrollViewer.ScrollToEnd(); });
     }
 
-    private void AddLogMessage(string message, string foreground = null, string background = null)
+    public void AddLogMessage(string message, string foreground = null, string background = null)
     {
         Dispatcher.UIThread.InvokeAsync(() =>
         {

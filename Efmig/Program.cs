@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Reactive;
 using System.Threading.Tasks;
+using Efmig.Core;
 using Efmig.Migrations;
 using NLog;
 using ReactiveUI;

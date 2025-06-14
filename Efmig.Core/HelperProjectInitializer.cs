@@ -1,8 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Threading.Tasks;
-
-namespace Efmig.Migrations;
+﻿namespace Efmig.Core;
 
 public class HelperProjectInitializer
 {

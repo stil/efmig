@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace Efmig.Migrations.Actions;
+﻿namespace Efmig.Core.Actions;
 
 public class ListMigrationsAction : IAction
 {
@@ -13,7 +11,8 @@ public class ListMigrationsAction : IAction
             {
                 "migrations",
                 "list"
-            }
+            },
+            DataCallback = null
         });
     }
 }

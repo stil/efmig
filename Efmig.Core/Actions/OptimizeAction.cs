@@ -1,11 +1,6 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 
-namespace Efmig.Migrations.Actions;
+namespace Efmig.Core.Actions;
 
 public class OptimizeAction : IAction
 {
