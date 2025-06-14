@@ -1,12 +1,14 @@
-﻿namespace Efmig.Core;
+﻿using System.IO.Abstractions;
 
-public class HelperProjectInitializer
+namespace Efmig.Core;
+
+public class HelperProjectInitializer(IFileSystem fileSystem)
 {
-    public static async Task<DirectoryInfo> CreateHelperProject(ConfigurationProfile profile)
+    public async Task<IDirectoryInfo> CreateHelperProject(ConfigurationProfile profile)
     {
         var projectName = $"HelperProject{DateTimeOffset.Now.ToUnixTimeSeconds()}";
 
-        var targetDirectory = new DirectoryInfo(projectName);
+        var targetDirectory = fileSystem.DirectoryInfo.New(projectName);
 
         var programCs = $$"""
 using System;
@@ -68,13 +70,13 @@ namespace Efmig
 
         targetDirectory.Create();
 
-        await File.WriteAllTextAsync(Path.Combine(targetDirectory.FullName, projectName + ".csproj"), csproj);
-        await File.WriteAllTextAsync(Path.Combine(targetDirectory.FullName, "Program.cs"), programCs);
+        await fileSystem.File.WriteAllTextAsync(fileSystem.Path.Combine(targetDirectory.FullName, projectName + ".csproj"), csproj);
+        await fileSystem.File.WriteAllTextAsync(fileSystem.Path.Combine(targetDirectory.FullName, "Program.cs"), programCs);
 
 
         var configSubdir = targetDirectory.CreateSubdirectory(".config");
 
-        await File.WriteAllTextAsync(Path.Combine(configSubdir.FullName, "dotnet-tools.json"), dotnetToolsJson);
+        await fileSystem.File.WriteAllTextAsync(fileSystem.Path.Combine(configSubdir.FullName, "dotnet-tools.json"), dotnetToolsJson);
 
         return targetDirectory;
     }

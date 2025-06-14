@@ -6,7 +6,7 @@ public class RemoveLastMigrationAction : IAction
 {
     public async Task ExecuteAsync(ActionContext ctx)
     {
-        await ctx.DotNetCli.RunDotnetEfTool(ctx, new CommonActionOptions
+        await ctx.DotNetEfTool.RunDotnetEfTool(ctx, new CommonActionOptions
         {
             ActionName = "remove last migration",
             DotnetEfArgs = new[]

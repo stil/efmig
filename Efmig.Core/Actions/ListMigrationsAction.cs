@@ -6,7 +6,7 @@ public class ListMigrationsAction : IAction
 {
     public async Task ExecuteAsync(ActionContext ctx)
     {
-        await ctx.DotNetCli.RunDotnetEfTool(ctx, new CommonActionOptions
+        await ctx.DotNetEfTool.RunDotnetEfTool(ctx, new CommonActionOptions
         {
             ActionName = "listing migrations",
             DotnetEfArgs = new[]

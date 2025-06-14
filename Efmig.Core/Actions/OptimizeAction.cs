@@ -9,7 +9,7 @@ public class OptimizeAction : IAction
     {
         var stringBuilder = new StringBuilder();
 
-        await ctx.DotNetCli.RunDotnetEfTool(ctx, new CommonActionOptions
+        await ctx.DotNetEfTool.RunDotnetEfTool(ctx, new CommonActionOptions
         {
             ActionName = "optmize dbcontext",
             DataCallback = line => { stringBuilder.AppendLine(line); },

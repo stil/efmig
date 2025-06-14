@@ -24,7 +24,7 @@ public class CreateMigrationAction : IAction
             args.Add(ctx.ConfigurationProfile.MigrationsDir);
         }
 
-        await ctx.DotNetCli.RunDotnetEfTool(ctx, new CommonActionOptions
+        await ctx.DotNetEfTool.RunDotnetEfTool(ctx, new CommonActionOptions
         {
             ActionName = $"creating migration '{migrationName}'",
             DotnetEfArgs = args.ToArray(),

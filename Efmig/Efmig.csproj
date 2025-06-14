@@ -30,6 +30,7 @@
         </PackageReference>
         <PackageReference Include="NLog" Version="5.5.0" />
         <PackageReference Include="ReactiveUI.Fody" Version="19.5.41" />
+        <PackageReference Include="TestableIO.System.IO.Abstractions.Wrappers" Version="22.0.14" />
     </ItemGroup>
 
     <ItemGroup>

@@ -28,7 +28,7 @@ public class GenerateMigrationScriptAction(IMigrationScriptMode migrationScriptM
             {
                 var migrationsJson = new StringBuilder();
 
-                await ctx.DotNetCli.RunDotnetEfTool(ctx, new CommonActionOptions
+                await ctx.DotNetEfTool.RunDotnetEfTool(ctx, new CommonActionOptions
                 {
                     ActionName = "detect migrations",
                     DataCallback = line => { migrationsJson.AppendLine(line); },
@@ -124,7 +124,7 @@ public class GenerateMigrationScriptAction(IMigrationScriptMode migrationScriptM
 
         if (hasMatchingMigrations)
         {
-            await ctx.DotNetCli.RunDotnetEfTool(ctx, new CommonActionOptions
+            await ctx.DotNetEfTool.RunDotnetEfTool(ctx, new CommonActionOptions
             {
                 ActionName = "generate migration script",
                 DataCallback = line => { stringBuilder.AppendLine(line); },

@@ -1,10 +1,11 @@
+using System.IO.Abstractions;
 using CliWrap;
 using Efmig.Core.Abstractions;
 using Efmig.Core.Actions;
 
 namespace Efmig.Core.Utils;
 
-public class DefaultDotNetCli : IDotNetCli
+public class DotNetEfTool(ICli cli, IFileSystem fileSystem) : IDotNetEfTool
 {
     public async Task RunDotnetEfTool(ActionContext ctx, CommonActionOptions options)
     {
@@ -23,38 +24,40 @@ public class DefaultDotNetCli : IDotNetCli
         var dbContextFullName = ctx.ConfigurationProfile.DbContextFullName;
         var dbContextCsprojPath = ctx.ConfigurationProfile.DbContextCsprojPath;
 
-        var targetDir = await HelperProjectInitializer.CreateHelperProject(ctx.ConfigurationProfile);
+        var targetDir = await new HelperProjectInitializer(fileSystem).CreateHelperProject(ctx.ConfigurationProfile);
 
         try
         {
             ctx.LogOutput.LogInfo("Running 'dotnet restore'...");
 
-            await Cli.Wrap("dotnet")
-                .WithWorkingDirectory(targetDir.FullName)
-                .WithArguments("restore")
-                .WithStandardOutputPipe(PipeTarget.ToDelegate(ctx.LogOutput.LogInfo))
-                .WithStandardErrorPipe(PipeTarget.ToDelegate(ctx.LogOutput.LogError))
-                .ExecuteAsync();
+            await cli.RunCommand(
+                Cli.Wrap("dotnet")
+                    .WithWorkingDirectory(targetDir.FullName)
+                    .WithArguments("restore")
+                    .WithStandardOutputPipe(PipeTarget.ToDelegate(ctx.LogOutput.LogInfo))
+                    .WithStandardErrorPipe(PipeTarget.ToDelegate(ctx.LogOutput.LogError))
+            );
 
             ctx.LogOutput.LogInfo("Running 'dotnet tool restore'...");
-            await Cli.Wrap("dotnet")
-                .WithWorkingDirectory(targetDir.FullName)
-                .WithArguments("tool restore")
-                .WithStandardOutputPipe(PipeTarget.ToDelegate(ctx.LogOutput.LogInfo))
-                .WithStandardErrorPipe(PipeTarget.ToDelegate(ctx.LogOutput.LogError))
-                .ExecuteAsync();
+            await cli.RunCommand(
+                Cli.Wrap("dotnet")
+                    .WithWorkingDirectory(targetDir.FullName)
+                    .WithArguments("tool restore")
+                    .WithStandardOutputPipe(PipeTarget.ToDelegate(ctx.LogOutput.LogInfo))
+                    .WithStandardErrorPipe(PipeTarget.ToDelegate(ctx.LogOutput.LogError))
+            );
 
             ctx.LogOutput.LogInfo("Running 'dotnet build'...");
-            await Cli.Wrap("dotnet")
-                .WithWorkingDirectory(targetDir.FullName)
-                .WithArguments("build")
-                .WithStandardOutputPipe(PipeTarget.ToDelegate(ctx.LogOutput.LogInfo))
-                .WithStandardErrorPipe(PipeTarget.ToDelegate(ctx.LogOutput.LogError))
-                .ExecuteAsync();
-
+            await cli.RunCommand(
+                Cli.Wrap("dotnet")
+                    .WithWorkingDirectory(targetDir.FullName)
+                    .WithArguments("build")
+                    .WithStandardOutputPipe(PipeTarget.ToDelegate(ctx.LogOutput.LogInfo))
+                    .WithStandardErrorPipe(PipeTarget.ToDelegate(ctx.LogOutput.LogError))
+            );
 
             ctx.LogOutput.LogInfo("Running dotnet-ef command...");
-            await Cli.Wrap("dotnet")
+            await cli.RunCommand(Cli.Wrap("dotnet")
                 .WithWorkingDirectory(targetDir.FullName)
                 .WithArguments(args =>
                 {
@@ -108,7 +111,7 @@ public class DefaultDotNetCli : IDotNetCli
                     }
                 }))
                 .WithStandardErrorPipe(PipeTarget.ToDelegate(ctx.LogOutput.LogError))
-                .ExecuteAsync();
+            );
 
             targetDir.Delete(true);
         }
