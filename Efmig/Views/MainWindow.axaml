@@ -135,7 +135,7 @@
                     CornerRadius="4 0 0 0" VerticalAlignment="Stretch" SizeChanged="Control_OnSizeChanged">
 
                 <ScrollViewer Name="ScrollOutputViewer" VerticalAlignment="Stretch" Height="400"
-                              x:Name="LogScrollViewer" HorizontalScrollBarVisibility="Auto">
+                              x:Name="LogScrollViewer" HorizontalScrollBarVisibility="Auto" AllowAutoHide="False">
                     <SelectableTextBlock x:Name="LogViewer" Foreground="White" Padding="12" />
                 </ScrollViewer>
             </Border>
