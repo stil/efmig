@@ -85,6 +85,10 @@
                     Remove from code
                 </Button>
 
+                <Button Classes="action" Command="{Binding RecreateLastAndGenerateScript}">
+                    Recreate and generate script
+                </Button>
+
                 <Button Classes="action" Command="{Binding GenerateApplyScriptForLastMigration}">
                     Generate apply script
                 </Button>

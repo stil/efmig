@@ -15,7 +15,6 @@ public static class CommonActionHelper
 {
     public static async Task RunDotnetEfTool(ActionContext ctx, CommonActionOptions options)
     {
-        ctx.ClearLog();
         ctx.LogInfo($"Started operation: {options.ActionName}.\r\n");
 
         var targetDir = await HelperProjectInitializer.CreateHelperProject(ctx.ConfigurationProfile);
