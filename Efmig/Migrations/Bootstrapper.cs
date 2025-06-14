@@ -6,6 +6,7 @@ using Avalonia.Platform.Storage;
 using DynamicData;
 using Efmig.Core;
 using Efmig.Core.Actions;
+using Efmig.Core.Utils;
 using Efmig.ViewModels;
 using Efmig.Views;
 using ReactiveUI;
@@ -120,6 +121,7 @@ public class Bootstrapper
 
         var logOutput = new LogOutput(mainWindow.LogViewer, mainWindow.LogScrollViewer);
         var scriptViewer = new ScriptViewer();
+        var dotNetCli = new DefaultDotNetCli();
 
         mainWindowViewModel.EditProfile = ReactiveCommand.CreateFromTask(async () =>
         {
@@ -154,7 +156,7 @@ public class Bootstrapper
             var selectedProfile = configurationProfiles.First(p =>
                 p.Name == mainWindowViewModel.SelectedConfigurationProfile);
 
-            var context = new ActionContext(logOutput, scriptViewer, selectedProfile);
+            var context = new ActionContext(logOutput, scriptViewer, dotNetCli, selectedProfile);
             var action = new ListMigrationsAction();
             await action.ExecuteAsync(context);
         }, profileSelected);
@@ -164,7 +166,7 @@ public class Bootstrapper
             var selectedProfile = configurationProfiles.First(p =>
                 p.Name == mainWindowViewModel.SelectedConfigurationProfile);
 
-            var context = new ActionContext(logOutput, scriptViewer, selectedProfile);
+            var context = new ActionContext(logOutput, scriptViewer, dotNetCli, selectedProfile);
             context.LogOutput.ClearLog();
 
             var action = new OptimizeAction();
@@ -176,7 +178,7 @@ public class Bootstrapper
             var selectedProfile = configurationProfiles.First(p =>
                 p.Name == mainWindowViewModel.SelectedConfigurationProfile);
 
-            var context = new ActionContext(logOutput, scriptViewer, selectedProfile);
+            var context = new ActionContext(logOutput, scriptViewer, dotNetCli, selectedProfile);
             context.LogOutput.ClearLog();
 
             var action = new RemoveLastMigrationAction();
@@ -188,7 +190,7 @@ public class Bootstrapper
             var selectedProfile = configurationProfiles.First(p =>
                 p.Name == mainWindowViewModel.SelectedConfigurationProfile);
 
-            var context = new ActionContext(logOutput, scriptViewer, selectedProfile);
+            var context = new ActionContext(logOutput, scriptViewer, dotNetCli, selectedProfile);
             context.LogOutput.ClearLog();
 
             var action1 = new RemoveLastMigrationAction();
@@ -208,7 +210,7 @@ public class Bootstrapper
             var selectedProfile = configurationProfiles.First(p =>
                 p.Name == mainWindowViewModel.SelectedConfigurationProfile);
 
-            var context = new ActionContext(logOutput, scriptViewer, selectedProfile);
+            var context = new ActionContext(logOutput, scriptViewer, dotNetCli, selectedProfile);
             context.LogOutput.ClearLog();
 
             var action = new GenerateMigrationScriptAction(new IApplyLastMigrationScriptMode());
@@ -220,7 +222,7 @@ public class Bootstrapper
             var selectedProfile = configurationProfiles.First(p =>
                 p.Name == mainWindowViewModel.SelectedConfigurationProfile);
 
-            var context = new ActionContext(logOutput, scriptViewer, selectedProfile);
+            var context = new ActionContext(logOutput, scriptViewer, dotNetCli, selectedProfile);
             context.LogOutput.ClearLog();
 
             var action = new GenerateMigrationScriptAction(new IRollbackLastMigrationScriptMode());
@@ -232,7 +234,7 @@ public class Bootstrapper
             var selectedProfile = configurationProfiles.First(p =>
                 p.Name == mainWindowViewModel.SelectedConfigurationProfile);
 
-            var context = new ActionContext(logOutput, scriptViewer, selectedProfile);
+            var context = new ActionContext(logOutput, scriptViewer, dotNetCli, selectedProfile);
             context.LogOutput.ClearLog();
 
             var action = new GenerateMigrationScriptAction(new IFullMigrationScriptMode());
@@ -244,7 +246,7 @@ public class Bootstrapper
             var selectedProfile = configurationProfiles.First(p =>
                 p.Name == mainWindowViewModel.SelectedConfigurationProfile);
 
-            var context = new ActionContext(logOutput, scriptViewer, selectedProfile);
+            var context = new ActionContext(logOutput, scriptViewer, dotNetCli, selectedProfile);
             context.LogOutput.ClearLog();
 
             var action = new GenerateMigrationScriptAction(new IUnappliedScriptMode());
@@ -256,7 +258,7 @@ public class Bootstrapper
             var selectedProfile = configurationProfiles.First(p =>
                 p.Name == mainWindowViewModel.SelectedConfigurationProfile);
 
-            var context = new ActionContext(logOutput, scriptViewer, selectedProfile);
+            var context = new ActionContext(logOutput, scriptViewer, dotNetCli, selectedProfile);
             context.LogOutput.ClearLog();
 
             context.Data = mainWindowViewModel.NewMigrationName;

@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Efmig.Core.Utils;
 
 namespace Efmig.Core.Actions;
 
@@ -8,7 +9,7 @@ public class OptimizeAction : IAction
     {
         var stringBuilder = new StringBuilder();
 
-        await CommonActionHelper.RunDotnetEfTool(ctx, new CommonActionOptions
+        await ctx.DotNetCli.RunDotnetEfTool(ctx, new CommonActionOptions
         {
             ActionName = "optmize dbcontext",
             DataCallback = line => { stringBuilder.AppendLine(line); },

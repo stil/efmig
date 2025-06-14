@@ -1,10 +1,12 @@
-﻿namespace Efmig.Core.Actions;
+﻿using Efmig.Core.Utils;
+
+namespace Efmig.Core.Actions;
 
 public class ListMigrationsAction : IAction
 {
     public async Task ExecuteAsync(ActionContext ctx)
     {
-        await CommonActionHelper.RunDotnetEfTool(ctx, new CommonActionOptions
+        await ctx.DotNetCli.RunDotnetEfTool(ctx, new CommonActionOptions
         {
             ActionName = "listing migrations",
             DotnetEfArgs = new[]

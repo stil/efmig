@@ -1,4 +1,6 @@
-﻿namespace Efmig.Core.Actions;
+﻿using Efmig.Core.Utils;
+
+namespace Efmig.Core.Actions;
 
 public class CreateMigrationAction : IAction
 {
@@ -22,7 +24,7 @@ public class CreateMigrationAction : IAction
             args.Add(ctx.ConfigurationProfile.MigrationsDir);
         }
 
-        await CommonActionHelper.RunDotnetEfTool(ctx, new CommonActionOptions
+        await ctx.DotNetCli.RunDotnetEfTool(ctx, new CommonActionOptions
         {
             ActionName = $"creating migration '{migrationName}'",
             DotnetEfArgs = args.ToArray(),

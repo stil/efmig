@@ -1,6 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
+using Efmig.Core.Utils;
 
 namespace Efmig.Core.Actions;
 
@@ -27,7 +28,7 @@ public class GenerateMigrationScriptAction(IMigrationScriptMode migrationScriptM
             {
                 var migrationsJson = new StringBuilder();
 
-                await CommonActionHelper.RunDotnetEfTool(ctx, new CommonActionOptions
+                await ctx.DotNetCli.RunDotnetEfTool(ctx, new CommonActionOptions
                 {
                     ActionName = "detect migrations",
                     DataCallback = line => { migrationsJson.AppendLine(line); },
@@ -123,7 +124,7 @@ public class GenerateMigrationScriptAction(IMigrationScriptMode migrationScriptM
 
         if (hasMatchingMigrations)
         {
-            await CommonActionHelper.RunDotnetEfTool(ctx, new CommonActionOptions
+            await ctx.DotNetCli.RunDotnetEfTool(ctx, new CommonActionOptions
             {
                 ActionName = "generate migration script",
                 DataCallback = line => { stringBuilder.AppendLine(line); },

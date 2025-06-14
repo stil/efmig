@@ -1,17 +1,12 @@
-﻿using CliWrap;
+using CliWrap;
+using Efmig.Core.Abstractions;
+using Efmig.Core.Actions;
 
-namespace Efmig.Core.Actions;
+namespace Efmig.Core.Utils;
 
-public class CommonActionOptions
+public class DefaultDotNetCli : IDotNetCli
 {
-    public required string ActionName { get; set; }
-    public required string[] DotnetEfArgs { get; set; }
-    public required Action<string>? DataCallback { get; set; }
-}
-
-public static class CommonActionHelper
-{
-    public static async Task RunDotnetEfTool(ActionContext ctx, CommonActionOptions options)
+    public async Task RunDotnetEfTool(ActionContext ctx, CommonActionOptions options)
     {
         ctx.LogOutput.LogInfo($"Started operation: {options.ActionName}.\r\n");
 
