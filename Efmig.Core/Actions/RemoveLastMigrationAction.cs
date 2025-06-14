@@ -9,12 +9,12 @@ public class RemoveLastMigrationAction : IAction
         await ctx.DotNetEfTool.RunDotnetEfTool(ctx, new CommonActionOptions
         {
             ActionName = "remove last migration",
-            DotnetEfArgs = new[]
-            {
+            DotnetEfArgs =
+            [
                 "migrations",
                 "remove",
                 "--json"
-            },
+            ],
             DataCallback = null
         });
     }

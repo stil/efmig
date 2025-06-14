@@ -9,11 +9,11 @@ public class ListMigrationsAction : IAction
         await ctx.DotNetEfTool.RunDotnetEfTool(ctx, new CommonActionOptions
         {
             ActionName = "listing migrations",
-            DotnetEfArgs = new[]
-            {
+            DotnetEfArgs =
+            [
                 "migrations",
                 "list"
-            },
+            ],
             DataCallback = null
         });
     }

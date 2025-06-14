@@ -32,12 +32,12 @@ public class GenerateMigrationScriptAction(IMigrationScriptMode migrationScriptM
                 {
                     ActionName = "detect migrations",
                     DataCallback = line => { migrationsJson.AppendLine(line); },
-                    DotnetEfArgs = new[]
-                    {
+                    DotnetEfArgs =
+                    [
                         "migrations",
                         "list",
                         "--json"
-                    }
+                    ]
                 });
 
                 migrations = JsonSerializer.Deserialize<List<MigrationJsonModel>>(migrationsJson.ToString());

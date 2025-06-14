@@ -13,11 +13,11 @@ public class OptimizeAction : IAction
         {
             ActionName = "optmize dbcontext",
             DataCallback = line => { stringBuilder.AppendLine(line); },
-            DotnetEfArgs = new[]
-            {
+            DotnetEfArgs =
+            [
                 "dbcontext",
                 "optimize"
-            }
+            ]
         });
 
     }
