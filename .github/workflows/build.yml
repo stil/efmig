@@ -32,7 +32,7 @@ jobs:
       #  run: 7z a -tzip artifacts/efmig-win-x64-Release.zip ./Efmig/bin/Release/net8.0/win-x64/publish/*
       - name: Upload win-x64 artifacts
         if: matrix.platform == 'windows-latest'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: efmig-win-x64-Release
           path: Efmig/bin/Release/net8.0/win-x64/publish/
@@ -47,7 +47,7 @@ jobs:
       #  run: 7z a -tzip artifacts/efmig-win-arm64-Release.zip ./Efmig/bin/Release/net8.0/win-arm64/publish/*
       - name: Upload win-arm64 artifacts
         if: matrix.platform == 'windows-latest'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: efmig-win-arm64-Release
           path: Efmig/bin/Release/net8.0/win-arm64/publish/
@@ -62,7 +62,7 @@ jobs:
       #  run: 7z a -tzip artifacts/efmig-linux-x64-Release.zip ./Efmig/bin/Release/net8.0/linux-x64/publish/*
       - name: Upload linux-x64 artifacts
         if: matrix.platform == 'ubuntu-latest'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: efmig-linux-x64-Release
           path: Efmig/bin/Release/net8.0/linux-x64/publish/
@@ -77,7 +77,7 @@ jobs:
       #  run: 7z a -tzip artifacts/efmig-linux-arm64-Release.zip ./Efmig/bin/Release/net8.0/linux-arm64/publish/*
       - name: Upload linux-arm64 artifacts
         if: matrix.platform == 'ubuntu-latest'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: efmig-linux-arm64-Release
           path: Efmig/bin/Release/net8.0/linux-arm64/publish/
@@ -92,7 +92,7 @@ jobs:
       #  run: 7z a -tzip artifacts/efmig-osx-x64-Release.zip ./Efmig/bin/Release/net8.0/osx-x64/publish/*
       - name: Upload osx-x64 artifacts
         if: matrix.platform == 'macos-latest'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: efmig-osx-x64-Release
           path: Efmig/bin/Release/net8.0/osx-x64/publish/
@@ -107,7 +107,7 @@ jobs:
       #  run: 7z a -tzip artifacts/efmig-osx-arm64-Release.zip ./Efmig/bin/Release/net8.0/osx-arm64/publish/*
       - name: Upload osx-arm64 artifacts
         if: matrix.platform == 'macos-latest'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: efmig-osx-arm64-Release
           path: Efmig/bin/Release/net8.0/osx-arm64/publish/

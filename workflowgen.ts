@@ -11,7 +11,7 @@ const platformTemplateGen = (name: string, rid: string, platform: string) =>
       #  run: 7z a -tzip artifacts/efmig-${name}-Release.zip ./Efmig/bin/Release/${targetFramework}/${rid}/publish/*
       - name: Upload ${name} artifacts
         if: matrix.platform == '${platform}'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: efmig-${name}-Release
           path: Efmig/bin/Release/${targetFramework}/${rid}/publish/
