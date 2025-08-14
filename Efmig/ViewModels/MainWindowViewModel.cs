@@ -21,4 +21,8 @@ public class MainWindowViewModel : ViewModelBase
     [Reactive] public ICommand GenerateRollbackScriptForLastMigration { get; set; }
     [Reactive] public ICommand GenerateMigrationScript { get; set; }
     [Reactive] public ICommand Optimize { get; set; }
+    [Reactive] public ICommand DiscoverFromSolution { get; set; }
+    [Reactive] public string SolutionPath { get; set; }
+    [Reactive] public ICommand SelectSolution { get; set; }
+    [Reactive] public ICommand RemoveProfile { get; set; }
 }

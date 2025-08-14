@@ -41,6 +41,13 @@
         <StackPanel Margin="16 36 16 16">
 
 
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,10">
+                <Button Content="Load from NuGet" Command="{Binding LoadNuGetVersions}" 
+                        IsEnabled="{Binding !IsLoadingVersions}" Margin="5,0,0,0" />
+                <TextBlock Text="Loading..." IsVisible="{Binding IsLoadingVersions}" 
+                           VerticalAlignment="Center" Margin="10,0,0,0" />
+            </StackPanel>
+
             <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="280,*">
 
                 <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="0 0 12 0">Profile name</TextBlock>
@@ -51,16 +58,18 @@
                     dotnet-ef version —
                     <TextBlock FontWeight="SemiBold" Cursor="Hand" PointerPressed="DotnetEfNugetLink_OnPointerPressed">NuGet<PathIcon Margin="6 1 0 0" Height="12" Width="12" Data="{StaticResource OpenRegular}"></PathIcon></TextBlock>
                 </SelectableTextBlock>
-                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding DotnetEfVersionSelected}" Margin="0 4"
-                         HorizontalAlignment="Stretch" />
+                <ComboBox Grid.Row="1" Grid.Column="1" Margin="0 4" HorizontalAlignment="Stretch"
+                          ItemsSource="{Binding DotnetEfVersions}"
+                          SelectedItem="{Binding DotnetEfVersionSelected}" />
 
                 <SelectableTextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="0 0 12 0"
                                      TextWrapping="Wrap">
                     Microsoft.EntityFrameworkCore.Design version —
                     <TextBlock FontWeight="SemiBold"  Cursor="Hand" PointerPressed="MsEfCoreDesignNugetLink_OnPointerPressed">NuGet<PathIcon Margin="6 1 0 0" Height="12" Width="12" Data="{StaticResource OpenRegular}"></PathIcon></TextBlock>
                 </SelectableTextBlock>
-                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding EfCoreDesignVersionSelected}"
-                         Margin="0 4" HorizontalAlignment="Stretch" />
+                <ComboBox Grid.Row="2" Grid.Column="1" Margin="0 4" HorizontalAlignment="Stretch"
+                          ItemsSource="{Binding EfCoreDesignVersions}"
+                          SelectedItem="{Binding EfCoreDesignVersionSelected}" />
 
                 <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="0 0 12 0">Target framework version</TextBlock>
                 <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding RuntimeVersionSelected}" Margin="0 4"
