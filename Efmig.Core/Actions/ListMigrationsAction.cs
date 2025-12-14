@@ -1,19 +1,20 @@
-﻿using System.Threading.Tasks;
+﻿using Efmig.Core.Utils;
 
-namespace Efmig.Migrations.Actions;
+namespace Efmig.Core.Actions;
 
 public class ListMigrationsAction : IAction
 {
     public async Task ExecuteAsync(ActionContext ctx)
     {
-        await CommonActionHelper.RunDotnetEfTool(ctx, new CommonActionOptions
+        await ctx.DotNetEfTool.RunDotnetEfTool(ctx, new CommonActionOptions
         {
             ActionName = "listing migrations",
-            DotnetEfArgs = new[]
-            {
+            DotnetEfArgs =
+            [
                 "migrations",
                 "list"
-            }
+            ],
+            DataCallback = null
         });
     }
 }

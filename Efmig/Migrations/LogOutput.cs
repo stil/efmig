@@ -2,35 +2,23 @@
 using Avalonia.Controls.Documents;
 using Avalonia.Media;
 using Avalonia.Threading;
+using Efmig.Core.Abstractions;
 
-namespace Efmig.Migrations.Actions;
+namespace Efmig.Migrations;
 
-public class ActionContext
+public class LogOutput(TextBlock logElement, ScrollViewer scrollViewer) : ILogOutput
 {
-    private readonly TextBlock _logElement;
-    private readonly ScrollViewer _scrollViewer;
-
-    public ActionContext(TextBlock logElement, ScrollViewer scrollViewer, ConfigurationProfile profile)
-    {
-        _logElement = logElement;
-        _scrollViewer = scrollViewer;
-        ConfigurationProfile = profile;
-    }
-
-    public ConfigurationProfile ConfigurationProfile { get; }
-    public object Data { get; set; }
-
     public void ClearLog()
     {
-        Dispatcher.UIThread.InvokeAsync(() => { _logElement.Inlines!.Clear(); });
+        Dispatcher.UIThread.InvokeAsync(() => { logElement.Inlines!.Clear(); });
     }
 
     public void ScrollToEnd()
     {
-        Dispatcher.UIThread.InvokeAsync(() => { _scrollViewer.ScrollToEnd(); });
+        Dispatcher.UIThread.InvokeAsync(() => { scrollViewer.ScrollToEnd(); });
     }
 
-    private void AddLogMessage(string message, string foreground = null, string background = null)
+    public void AddLogMessage(string message, string foreground = null, string background = null)
     {
         Dispatcher.UIThread.InvokeAsync(() =>
         {
@@ -45,8 +33,8 @@ public class ActionContext
                 run.Background = SolidColorBrush.Parse(background);
             }
 
-            _logElement.Inlines!.Add(run);
-            _scrollViewer.ScrollToEnd();
+            logElement.Inlines!.Add(run);
+            scrollViewer.ScrollToEnd();
         });
     }
 

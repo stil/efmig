@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace Efmig.Migrations.Actions;
+﻿namespace Efmig.Core.Actions;
 
 public interface IAction
 {

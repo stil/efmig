@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using Efmig.Core.Utils;
 
-namespace Efmig.Migrations.Actions;
+namespace Efmig.Core.Actions;
 
 public class CreateMigrationAction : IAction
 {
     public async Task ExecuteAsync(ActionContext ctx)
     {
+        ArgumentNullException.ThrowIfNull(ctx.Data);
+        
         var migrationName = (string)ctx.Data;
 
         var args = new List<string>
@@ -23,10 +24,11 @@ public class CreateMigrationAction : IAction
             args.Add(ctx.ConfigurationProfile.MigrationsDir);
         }
 
-        await CommonActionHelper.RunDotnetEfTool(ctx, new CommonActionOptions
+        await ctx.DotNetEfTool.RunDotnetEfTool(ctx, new CommonActionOptions
         {
             ActionName = $"creating migration '{migrationName}'",
-            DotnetEfArgs = args.ToArray()
+            DotnetEfArgs = args.ToArray(),
+            DataCallback = null
         });
     }
 }

@@ -43,7 +43,7 @@
             </ExperimentalAcrylicBorder.Material>
         </ExperimentalAcrylicBorder>
 
-        <Grid ColumnDefinitions="250,*" RowDefinitions="Auto,Auto,*">
+        <Grid ColumnDefinitions="260,*" RowDefinitions="Auto,Auto,*">
             <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="1" Margin="12 0 12 12"
                         HorizontalAlignment="Stretch">
 
@@ -70,6 +70,10 @@
                 <Button Classes="action" Command="{Binding GenerateMigrationScript}">
                     Generate full migration script
                 </Button>
+
+                <Button Classes="action" Command="{Binding GenerateUnappliedMigrationScript}">
+                    Generate unapplied migration script
+                </Button>
                 
                 <Button Classes="action" Command="{Binding Optimize}">
                     Generate optimized model
@@ -79,6 +83,10 @@
 
                 <Button Classes="action" Command="{Binding RemoveLastMigration}">
                     Remove from code
+                </Button>
+
+                <Button Classes="action" Command="{Binding RecreateLastAndGenerateScript}">
+                    Recreate and generate script
                 </Button>
 
                 <Button Classes="action" Command="{Binding GenerateApplyScriptForLastMigration}">
@@ -131,7 +139,7 @@
                     CornerRadius="4 0 0 0" VerticalAlignment="Stretch" SizeChanged="Control_OnSizeChanged">
 
                 <ScrollViewer Name="ScrollOutputViewer" VerticalAlignment="Stretch" Height="400"
-                              x:Name="LogScrollViewer" HorizontalScrollBarVisibility="Auto">
+                              x:Name="LogScrollViewer" HorizontalScrollBarVisibility="Auto" AllowAutoHide="False">
                     <SelectableTextBlock x:Name="LogViewer" Foreground="White" Padding="12" />
                 </ScrollViewer>
             </Border>

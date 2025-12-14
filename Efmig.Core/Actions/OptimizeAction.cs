@@ -1,11 +1,7 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
+using Efmig.Core.Utils;
 
-namespace Efmig.Migrations.Actions;
+namespace Efmig.Core.Actions;
 
 public class OptimizeAction : IAction
 {
@@ -13,15 +9,15 @@ public class OptimizeAction : IAction
     {
         var stringBuilder = new StringBuilder();
 
-        await CommonActionHelper.RunDotnetEfTool(ctx, new CommonActionOptions
+        await ctx.DotNetEfTool.RunDotnetEfTool(ctx, new CommonActionOptions
         {
             ActionName = "optmize dbcontext",
             DataCallback = line => { stringBuilder.AppendLine(line); },
-            DotnetEfArgs = new[]
-            {
+            DotnetEfArgs =
+            [
                 "dbcontext",
                 "optimize"
-            }
+            ]
         });
 
     }

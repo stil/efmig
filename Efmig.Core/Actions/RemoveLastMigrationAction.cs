@@ -1,20 +1,21 @@
-﻿using System.Threading.Tasks;
+﻿using Efmig.Core.Utils;
 
-namespace Efmig.Migrations.Actions;
+namespace Efmig.Core.Actions;
 
 public class RemoveLastMigrationAction : IAction
 {
     public async Task ExecuteAsync(ActionContext ctx)
     {
-        await CommonActionHelper.RunDotnetEfTool(ctx, new CommonActionOptions
+        await ctx.DotNetEfTool.RunDotnetEfTool(ctx, new CommonActionOptions
         {
             ActionName = "remove last migration",
-            DotnetEfArgs = new[]
-            {
+            DotnetEfArgs =
+            [
                 "migrations",
                 "remove",
                 "--json"
-            }
+            ],
+            DataCallback = null
         });
     }
 }

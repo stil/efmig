@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Runtime.InteropServices;
 
-namespace Efmig;
+namespace Efmig.Migrations;
 
 public static class LinkOpener
 {
