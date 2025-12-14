@@ -6,7 +6,7 @@ const platformStepsGen = (name: string, rid: string, platform: string) => [
   {
     name: `Build ${name}`,
     if: `matrix.platform == '${platform}'`,
-    run: `dotnet publish --configuration Release -r ${rid}`,
+    run: `dotnet publish --configuration Release -r ${rid} -p:PublishSingleFile=true Efmig/Efmig.csproj`,
   },
   {
     name: `Upload ${name} artifacts`,
