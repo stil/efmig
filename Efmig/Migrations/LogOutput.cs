@@ -4,27 +4,18 @@ using Avalonia.Media;
 using Avalonia.Threading;
 using Efmig.Core.Abstractions;
 
-namespace Efmig;
+namespace Efmig.Migrations;
 
-public class LogOutput : ILogOutput
+public class LogOutput(TextBlock logElement, ScrollViewer scrollViewer) : ILogOutput
 {
-    private readonly TextBlock _logElement;
-    private readonly ScrollViewer _scrollViewer;
-
-    public LogOutput(TextBlock logElement, ScrollViewer scrollViewer)
-    {
-        _logElement = logElement;
-        _scrollViewer = scrollViewer;
-    }
-
     public void ClearLog()
     {
-        Dispatcher.UIThread.InvokeAsync(() => { _logElement.Inlines!.Clear(); });
+        Dispatcher.UIThread.InvokeAsync(() => { logElement.Inlines!.Clear(); });
     }
 
     public void ScrollToEnd()
     {
-        Dispatcher.UIThread.InvokeAsync(() => { _scrollViewer.ScrollToEnd(); });
+        Dispatcher.UIThread.InvokeAsync(() => { scrollViewer.ScrollToEnd(); });
     }
 
     public void AddLogMessage(string message, string foreground = null, string background = null)
@@ -42,8 +33,8 @@ public class LogOutput : ILogOutput
                 run.Background = SolidColorBrush.Parse(background);
             }
 
-            _logElement.Inlines!.Add(run);
-            _scrollViewer.ScrollToEnd();
+            logElement.Inlines!.Add(run);
+            scrollViewer.ScrollToEnd();
         });
     }
 

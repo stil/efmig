@@ -8,6 +8,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{5280742F
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Efmig.Core", "Efmig.Core\Efmig.Core.csproj", "{B7B1D6E9-716A-470B-87EB-0D5B7BD0D0FC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Files", "Files", "{1874A77D-D166-48BC-8372-9AE618D2FFAE}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\build.yml = .github\workflows\build.yml
+		README.md = README.md
+		.gitignore = .gitignore
+		LICENSE = LICENSE
+		workflowgen.ts = workflowgen.ts
+		workflowgen = workflowgen
+		.gitattributes = .gitattributes
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

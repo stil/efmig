@@ -3,9 +3,8 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Efmig.Core.Abstractions;
-using Efmig.Migrations;
 
-namespace Efmig;
+namespace Efmig.Migrations;
 
 public class ScriptViewer : IScriptViewer
 {
