@@ -45,36 +45,47 @@
 
                 <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="0 0 12 0">Profile name</TextBlock>
                 <TextBox Grid.Row="0" Grid.Column="1" Margin="0 4" Text="{Binding ProfileName}"
-                         Watermark="MyConnection1" />
+                         Watermark="MyConnection1" VerticalContentAlignment="Center" />
 
-                <SelectableTextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="0 0 12 0">
+                <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="0 0 12 0">
                     dotnet-ef version —
-                    <TextBlock FontWeight="SemiBold" Cursor="Hand" PointerPressed="DotnetEfNugetLink_OnPointerPressed">NuGet<PathIcon Margin="6 1 0 0" Height="12" Width="12" Data="{StaticResource OpenRegular}"></PathIcon></TextBlock>
-                </SelectableTextBlock>
+                    <TextBlock FontWeight="SemiBold" Cursor="Hand" VerticalAlignment="Center"
+                               PointerPressed="DotnetEfNugetLink_OnPointerPressed">
+                        NuGet
+                        <PathIcon Margin="6 0 0 0" Height="12" Width="12" VerticalAlignment="Center"
+                                  Data="{StaticResource OpenRegular}" />
+                    </TextBlock>
+                </TextBlock>
                 <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding DotnetEfVersionSelected}" Margin="0 4"
-                         HorizontalAlignment="Stretch" />
+                         HorizontalAlignment="Stretch" VerticalContentAlignment="Center" />
 
-                <SelectableTextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="0 0 12 0"
-                                     TextWrapping="Wrap">
+                <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="0 0 12 0"
+                           TextWrapping="Wrap">
                     Microsoft.EntityFrameworkCore.Design version —
-                    <TextBlock FontWeight="SemiBold"  Cursor="Hand" PointerPressed="MsEfCoreDesignNugetLink_OnPointerPressed">NuGet<PathIcon Margin="6 1 0 0" Height="12" Width="12" Data="{StaticResource OpenRegular}"></PathIcon></TextBlock>
-                </SelectableTextBlock>
+                    <TextBlock FontWeight="SemiBold" Cursor="Hand" VerticalAlignment="Center"
+                               PointerPressed="MsEfCoreDesignNugetLink_OnPointerPressed">
+                        NuGet
+                        <PathIcon Margin="6 0 0 0" Height="12" Width="12" VerticalAlignment="Center"
+                                  Data="{StaticResource OpenRegular}" />
+                    </TextBlock>
+                </TextBlock>
                 <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding EfCoreDesignVersionSelected}"
-                         Margin="0 4" HorizontalAlignment="Stretch" />
+                         Margin="0 4" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" />
 
                 <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="0 0 12 0">Target framework version</TextBlock>
                 <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding RuntimeVersionSelected}" Margin="0 4"
-                         HorizontalAlignment="Stretch" />
+                         HorizontalAlignment="Stretch" VerticalContentAlignment="Center" />
 
                 <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="0 0 12 0">Migrations directory</TextBlock>
                 <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding MigrationsDir}" Margin="0 4"
-                         HorizontalAlignment="Stretch" Watermark="Migrations" />
+                         HorizontalAlignment="Stretch" Watermark="Migrations" VerticalContentAlignment="Center" />
 
 
                 <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Margin="0 0 12 0">DbContext .csproj path</TextBlock>
                 <Grid Grid.Row="5" Grid.Column="1" ColumnDefinitions="*,4,Auto">
                     <TextBox Margin="0 4" HorizontalAlignment="Stretch"
-                             IsReadOnly="True" Text="{Binding DbContextCsprojPath, Mode=TwoWay}" />
+                             IsReadOnly="True" Text="{Binding DbContextCsprojPath, Mode=TwoWay}"
+                             VerticalContentAlignment="Center" />
                     <Button Grid.Column="2" Command="{Binding DbContextCsprojSelect}">...</Button>
                 </Grid>
 
@@ -83,12 +94,81 @@
                     DbContext fully qualified name
                 </TextBlock>
                 <TextBox Grid.Row="6" Grid.Column="1" Margin="0 4" HorizontalAlignment="Stretch"
-                         Text="{Binding DbContextFullName}" Watermark="MyApp.MyDbContext" />
+                         Text="{Binding DbContextFullName}" Watermark="MyApp.MyDbContext"
+                         VerticalContentAlignment="Center" />
 
-                <TextBlock Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" Margin="0 0 12 0">DbContext configuration code</TextBlock>
-                <TextBox Grid.Row="7" Grid.Column="1" Margin="0 4" HorizontalAlignment="Stretch" AcceptsReturn="True"
-                         Height="100"
-                         Text="{Binding DbContextConfigCode}" />
+                <!-- Row 7: Mode Toggle -->
+                <TextBlock Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" Margin="0 0 12 0">Configuration Mode</TextBlock>
+                <StackPanel Grid.Row="7" Grid.Column="1" Orientation="Horizontal" Margin="0 4">
+                    <RadioButton Content="Visual Builder" IsChecked="{Binding UseVisualBuilder}" Margin="0 0 12 0" />
+                    <RadioButton Content="Custom Code" IsChecked="{Binding !UseVisualBuilder}" />
+                </StackPanel>
+
+                <!-- Row 8: Visual Builder Panel -->
+                <StackPanel Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 8"
+                            IsVisible="{Binding UseVisualBuilder}">
+
+                    <TextBlock Margin="0 0 0 4">Database Provider</TextBlock>
+                    <ComboBox ItemsSource="{Binding DatabaseProviders}"
+                              SelectedItem="{Binding SelectedDatabaseProvider}"
+                              Margin="0 4" />
+
+                    <CheckBox IsChecked="{Binding UseConnectionStringDirectly}" Margin="0 8 0 4">
+                        Use connection string directly
+                    </CheckBox>
+
+                    <!-- Connection String Builder (visible when NOT using connection string directly) -->
+                    <Grid IsVisible="{Binding !UseConnectionStringDirectly}"
+                          ColumnDefinitions="140,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto" Margin="0 4">
+                        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center">Server/Host:</TextBlock>
+                        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Server}" Margin="4"
+                                 VerticalContentAlignment="Center" />
+
+                        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center">Port:</TextBlock>
+                        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Port}" Margin="4"
+                                 Watermark="Leave empty for default" VerticalContentAlignment="Center" />
+
+                        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center">Database:</TextBlock>
+                        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Database}" Margin="4"
+                                 VerticalContentAlignment="Center" />
+
+                        <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center">Username:</TextBlock>
+                        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Username}" Margin="4"
+                                 VerticalContentAlignment="Center" />
+
+                        <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center">Password:</TextBlock>
+                        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Password}" Margin="4"
+                                 VerticalContentAlignment="Center" />
+                    </Grid>
+
+                    <!-- Connection String Input (visible when using connection string directly) -->
+                    <TextBox IsVisible="{Binding UseConnectionStringDirectly}"
+                             Text="{Binding ConnectionString}"
+                             Watermark="Server=localhost;Database=mydb;..."
+                             Margin="0 4" VerticalContentAlignment="Center" />
+
+                    <TextBlock Margin="0 8 0 4" FontWeight="SemiBold">Generated Code Preview:</TextBlock>
+                    <TextBox IsReadOnly="True"
+                             Text="{Binding GeneratedCode}"
+                             MinHeight="80"
+                             AcceptsReturn="True"
+                             FontFamily="Consolas,Menlo,Monaco,monospace"
+                             TextWrapping="Wrap" />
+                </StackPanel>
+
+                <!-- Row 8: Custom Code Panel (visible when UseVisualBuilder=false) -->
+                <TextBlock Grid.Row="8" Grid.Column="0" VerticalAlignment="Top" Margin="0 8 12 0"
+                           IsVisible="{Binding !UseVisualBuilder}">
+                    DbContext configuration code
+                </TextBlock>
+                <TextBox Grid.Row="8" Grid.Column="1"
+                         IsVisible="{Binding !UseVisualBuilder}"
+                         Margin="0 8 0 0"
+                         HorizontalAlignment="Stretch"
+                         AcceptsReturn="True"
+                         Height="120"
+                         Text="{Binding DbContextConfigCode}"
+                         FontFamily="Consolas,Menlo,Monaco,monospace" />
             </Grid>
 
             <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Margin="0 12 0 0"

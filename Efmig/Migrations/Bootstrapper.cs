@@ -26,16 +26,31 @@ public class Bootstrapper
 
         ConfigurationProfile PopulateConfigurationProfileFromViewModel(ProfileSetupWindowViewModel viewModel)
         {
+            // If using Visual Builder, generate the code from builder fields
+            var configCode = viewModel.UseVisualBuilder
+                ? viewModel.GeneratedCode
+                : viewModel.DbContextConfigCode;
+
             return new ConfigurationProfile
             {
                 Name = viewModel.ProfileName,
                 DbContextCsprojPath = viewModel.DbContextCsprojPath,
                 RuntimeVersion = viewModel.RuntimeVersionSelected,
-                DbContextConfigCode = viewModel.DbContextConfigCode,
+                DbContextConfigCode = configCode,
                 DbContextFullName = viewModel.DbContextFullName,
                 DotnetEfVersion = viewModel.DotnetEfVersionSelected,
                 EfCoreDesignVersion = viewModel.EfCoreDesignVersionSelected,
-                MigrationsDir = viewModel.MigrationsDir
+                MigrationsDir = viewModel.MigrationsDir,
+                // Visual Builder properties
+                UseVisualBuilder = viewModel.UseVisualBuilder,
+                DatabaseProvider = viewModel.SelectedDatabaseProvider,
+                UseConnectionStringDirectly = viewModel.UseConnectionStringDirectly,
+                ConnectionString = viewModel.ConnectionString,
+                Server = viewModel.Server,
+                Port = string.IsNullOrWhiteSpace(viewModel.Port) ? null : int.Parse(viewModel.Port),
+                Database = viewModel.Database,
+                Username = viewModel.Username,
+                Password = viewModel.Password
             };
         }
 
@@ -52,6 +67,18 @@ public class Bootstrapper
             setupViewModel.DbContextConfigCode =
                 existingProfile?.DbContextConfigCode ?? "optionsBuilder.UseNpgsql(\"\")";
             setupViewModel.MigrationsDir = existingProfile?.MigrationsDir ?? "";
+
+            // Visual Builder properties (defaults for new profiles, loads from existing for old ones)
+            // For backward compatibility: if UseVisualBuilder is not set (old profiles), default to false (Custom Code mode)
+            setupViewModel.UseVisualBuilder = existingProfile?.UseVisualBuilder ?? (existingProfile == null);
+            setupViewModel.SelectedDatabaseProvider = existingProfile?.DatabaseProvider ?? "PostgreSQL";
+            setupViewModel.UseConnectionStringDirectly = existingProfile?.UseConnectionStringDirectly ?? false;
+            setupViewModel.ConnectionString = existingProfile?.ConnectionString ?? "";
+            setupViewModel.Server = existingProfile?.Server ?? "";
+            setupViewModel.Port = existingProfile?.Port?.ToString() ?? "";
+            setupViewModel.Database = existingProfile?.Database ?? "";
+            setupViewModel.Username = existingProfile?.Username ?? "";
+            setupViewModel.Password = existingProfile?.Password ?? "";
 
             setupViewModel.DbContextCsprojSelect = ReactiveCommand.CreateFromTask(async () =>
             {
