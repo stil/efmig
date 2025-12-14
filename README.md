@@ -26,20 +26,40 @@ Why you should use it:
    - Migrations directory. Enter a path relative to location of C# project where DbContext exists. Default value is `Migrations`.
    - DbContext .csproj path: pick the path of C# project that holds your DbContext class.
    - DbContext fully qualified name: this is a full class name of DbContext, for example `MyApp.MyDbContext`.
-   - DbContext configuration code: here you need to configure connection string for `dotnet-ef` to work. See [explanation below](#dbcontext-configuration-code). 
+   - DbContext configuration: you can use either the Visual Builder or Custom Code mode. See [explanation below](#dbcontext-configuration).
 4. Save profile.
 
-### DbContext configuration code
+### DbContext configuration
 
-`optionsBuilder` variable of type `DbContextBuilder<TYourDbContext>` is defined and you are expected to configure connection string using C# syntax.
+You have two options for configuring your database connection:
 
-Postgres example
+#### Visual Builder (Recommended)
+
+The Visual Builder provides a user-friendly interface to configure your connection:
+1. Select "Visual Builder" mode in the Configuration Mode section.
+2. Choose your database provider from the dropdown (PostgreSQL, MySQL, SQL Server, or SQLite).
+3. Either:
+   - Fill in individual connection fields (Server, Port, Database, Username, Password), or
+   - Check "Use connection string directly" and paste your connection string.
+4. The generated C# code will be shown in real-time in the preview box.
+
+The Visual Builder automatically generates the correct connection code for your selected database provider with proper defaults.
+
+#### Custom Code
+
+If you prefer to write the configuration code manually:
+1. Select "Custom Code" mode.
+2. Write your configuration code directly using C# syntax.
+
+The `optionsBuilder` variable of type `DbContextBuilder<TYourDbContext>` is available for you to configure.
+
+Postgres example:
 ```csharp
 var connectionString = "Host=myserver;Username=mylogin;Password=mypass;Database=mydatabase";
 optionsBuilder.UseNpgsql(connectionString);
 ```
 
-MySQL example
+MySQL example:
 ```csharp
 var connectionString = "server=localhost;user=myuser;password=mypassword;database=mydb;";
 var serverVersion = ServerVersion.AutoDetect(connectionString);
@@ -51,10 +71,12 @@ You can invoke one of the following actions:
 - Create a new migration. Specify its name beforehand and click `[+]` button on the right.
 - General actions:
   - List migrations. This action does nothing but lists already existing migrations.
-  - Generate migration script. This action opens default text editor with SQL code of all migrations for you to review.
+  - Generate full migration script. This action opens default text editor with SQL code of all migrations for you to review.
+  - Generate unapplied migration script. This action generates SQL script for only the migrations that haven't been applied yet.
   - Generate optimized model.
 - Last migration actions:
   - Remove from code. This action removes most recent migration from **the code**. Nothing will happen on the actual database. Will fail if the migration is already applied on database - in that case, use "Generate rollback script" action first.
+  - Recreate and generate script. This action recreates the last migration and generates a SQL script for you to review and manually apply.
   - Generate apply script. This actions generates SQL script of last migration for you to review and manually apply.
   - Generate rollback script. This action generates SQL script that rolls back last migration for you to review and manually apply.
 
