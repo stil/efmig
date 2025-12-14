@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+deno run --allow-write ./workflowgen.ts

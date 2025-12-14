@@ -1,0 +1,20 @@
+{
+  "deno.enable": true,
+  "deno.lint": true,
+  "typescript.suggest.completeFunctionCalls": true,
+  "deno.unstable": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.formatOnSave": true,
+  "deno.suggest.imports.hosts": {
+    "https://deno.land": false
+  }
+}
