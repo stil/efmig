@@ -24,9 +24,6 @@ jobs:
         uses: actions/setup-dotnet@v5
         with:
           dotnet-version: 10.0.x
-      - name: Install rcodesign
-        if: matrix.platform == 'macos-latest'
-        run: cargo install apple-codesign
       - name: Build win-x64
         if: matrix.platform == 'windows-latest'
         run: dotnet publish --configuration Release -r win-x64 -p:PublishSingleFile=true Efmig/Efmig.csproj
@@ -80,9 +77,6 @@ jobs:
       - name: Build osx-arm64
         if: matrix.platform == 'macos-latest'
         run: dotnet publish --configuration Release -r osx-arm64 -p:PublishSingleFile=true Efmig/Efmig.csproj
-      - name: Sign osx-arm64 binary
-        if: matrix.platform == 'macos-latest'
-        run: rcodesign sign Efmig/bin/Release/net10.0/osx-arm64/publish/efmig
       - name: Upload osx-arm64 artifacts
         if: matrix.platform == 'macos-latest'
         uses: actions/upload-artifact@v4
