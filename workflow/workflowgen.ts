@@ -2,13 +2,25 @@ import yaml from "js-yaml";
 
 const targetFramework = "net10.0";
 
-const platformStepsGen = (name: string, rid: string, platform: string) => [
-  {
-    name: `Build ${name}`,
-    if: `matrix.platform == '${platform}'`,
-    run: `dotnet publish --configuration Release -r ${rid} -p:PublishSingleFile=true Efmig/Efmig.csproj`,
-  },
-  {
+const platformStepsGen = (name: string, rid: string, platform: string) => {
+  const isMacOS = name === "osx-arm64";
+  const steps = [
+    {
+      name: `Build ${name}`,
+      if: `matrix.platform == '${platform}'`,
+      run: `dotnet publish --configuration Release -r ${rid} -p:PublishSingleFile=true Efmig/Efmig.csproj`,
+    },
+  ];
+
+  if (isMacOS) {
+    steps.push({
+      name: `Sign ${name} binary`,
+      if: `matrix.platform == '${platform}'`,
+      run: `rcodesign sign Efmig/bin/Release/${targetFramework}/${rid}/publish/efmig`,
+    });
+  }
+
+  steps.push({
     name: `Upload ${name} artifacts`,
     if: `matrix.platform == '${platform}'`,
     uses: "actions/upload-artifact@v4",
@@ -17,8 +29,10 @@ const platformStepsGen = (name: string, rid: string, platform: string) => [
       path: `Efmig/bin/Release/${targetFramework}/${rid}/publish/`,
       "if-no-files-found": "error",
     },
-  },
-];
+  });
+
+  return steps;
+};
 
 const platformConfigs = [
   { name: "win-x64", rid: "win-x64", platform: "windows-latest" },
@@ -29,9 +43,19 @@ const platformConfigs = [
   { name: "osx-arm64", rid: "osx-arm64", platform: "macos-latest" },
 ];
 
-const extraSteps = platformConfigs.flatMap((config) =>
-  platformStepsGen(config.name, config.rid, config.platform)
-);
+// Install rcodesign once for macOS platform
+const rcodesignInstallStep = {
+  name: "Install rcodesign",
+  if: "matrix.platform == 'macos-latest'",
+  run: "cargo install apple-codesign",
+};
+
+const extraSteps = [
+  rcodesignInstallStep,
+  ...platformConfigs.flatMap((config) =>
+    platformStepsGen(config.name, config.rid, config.platform)
+  ),
+];
 
 const workflow = {
   name: "build",
