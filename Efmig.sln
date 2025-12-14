@@ -14,9 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Files", "Files", "{1874A77D
 		README.md = README.md
 		.gitignore = .gitignore
 		LICENSE = LICENSE
-		workflowgen.ts = workflowgen.ts
-		workflowgen = workflowgen
 		.gitattributes = .gitattributes
+		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
 Global

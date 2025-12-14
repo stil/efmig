@@ -1,0 +1,27 @@
+root = true
+
+[*]
+
+# Microsoft .NET properties
+csharp_new_line_before_members_in_object_initializers = false
+csharp_preferred_modifier_order = public, required, protected, internal, file, new, private, abstract, virtual, sealed, static, override, extern, unsafe, volatile, async, readonly:suggestion
+
+# ReSharper properties
+resharper_blank_lines_after_control_transfer_statements = 1
+resharper_blank_lines_around_auto_property = 0
+resharper_braces_for_foreach = required
+resharper_braces_for_ifelse = required
+resharper_braces_redundant = false
+resharper_csharp_max_line_length = 146
+resharper_csharp_remove_blank_lines_near_braces_in_code = false
+resharper_default_internal_modifier = implicit
+resharper_instance_members_qualify_declared_in = 
+resharper_parentheses_redundancy_style = remove
+resharper_place_accessorholder_attribute_on_same_line = true
+resharper_place_expr_method_on_single_line = true
+resharper_place_expr_property_on_single_line = false
+resharper_place_simple_embedded_statement_on_same_line = false
+resharper_place_simple_initializer_on_single_line = false
+resharper_wrap_chained_binary_expressions = chop_if_long
+resharper_wrap_list_pattern = chop_if_long
+resharper_wrap_object_and_collection_initializer_style = chop_always
